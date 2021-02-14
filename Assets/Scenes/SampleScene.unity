@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 4345309}
   - component: {fileID: 4345311}
   - component: {fileID: 4345310}
+  - component: {fileID: 4345312}
   m_Layer: 0
   m_Name: Solaire
   m_TagString: Untagged
@@ -222,6 +223,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!50 &4345312
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345308}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &264449927
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +361,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.69803923, g: 0.86650234, b: 0.90588236, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -609,6 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 732870025}
   - component: {fileID: 732870026}
+  - component: {fileID: 732870027}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -624,7 +647,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732870024}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4783397, y: -0.44937965, z: -17.057493}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -637,12 +660,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732870024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 931e8d8bc15419340b047e403474aef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 965896649}
+--- !u!114 &732870027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732870024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792c47c64f8fbc44d859f542f3ddc049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &965896646
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +691,7 @@ GameObject:
   - component: {fileID: 965896648}
   m_Layer: 0
   m_Name: TerrainBackground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
