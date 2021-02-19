@@ -10,15 +10,13 @@ public class CustomEditor
     {
 
         Transform t = command.context as Transform;
-        if( t.gameObject.tag == "Unit")
-        {
-            GameObject ground = GameObject.FindGameObjectWithTag("Ground");
-            Tilemap groundTilemap = ground.GetComponent<Tilemap>();
-            Vector3Int cellPos = groundTilemap.WorldToCell(t.position);
-            Vector3 ajustedWorldPos = groundTilemap.CellToWorld(cellPos);
-            ajustedWorldPos.y += 0.25f;
-            t.position = ajustedWorldPos;
-        }
+        GameObject ground = GameObject.FindGameObjectWithTag("Ground");
+        Tilemap groundTilemap = ground.GetComponent<Tilemap>();
+        Vector3Int cellPos = groundTilemap.WorldToCell(t.position);
+        Vector3 ajustedWorldPos = groundTilemap.CellToWorld(cellPos);
+        ajustedWorldPos.y += 0.25f;
+        t.position = ajustedWorldPos;
+        
     }
 
     
