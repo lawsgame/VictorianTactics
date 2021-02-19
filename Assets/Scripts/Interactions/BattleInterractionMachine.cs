@@ -9,16 +9,15 @@ public class BattleInterractionMachine : MonoBehaviour
     private Tilemap _groundTilemap;
     private StateMachine<BattleInterractionState> _stateMachine;
 
-    // Start is called before the first frame update
     void Start()
     {
-        _stateMachine = new StateMachine<BattleInterractionState>();
-        _stateMachine.Push(new FreePlayBIS());
         _groundTilemap = GameObject.FindGameObjectWithTag("Ground").GetComponent<Tilemap>();
+        _stateMachine = new StateMachine<BattleInterractionState>();
+        _stateMachine.Push(new FreePlayBIS(this, _groundTilemap));
+        
             
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
