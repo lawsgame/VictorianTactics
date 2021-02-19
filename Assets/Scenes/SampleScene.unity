@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4345312}
   m_Layer: 0
   m_Name: Solaire
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4345308}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.634, y: -0.696, z: 0}
+  m_LocalPosition: {x: 1, y: -0.75, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 352423214}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 264449928}
   m_Layer: 0
   m_Name: PurpleSol
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -319,7 +319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264449927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.503, y: -1.398, z: 0}
+  m_LocalPosition: {x: -1.5, y: -1.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 352423214}
@@ -449,7 +449,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 732870025}
-  - component: {fileID: 732870026}
   - component: {fileID: 732870027}
   m_Layer: 0
   m_Name: BattleManager
@@ -472,19 +471,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &732870026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732870024}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 931e8d8bc15419340b047e403474aef2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ground: {fileID: 965896649}
 --- !u!114 &732870027
 MonoBehaviour:
   m_ObjectHideFlags: 0
