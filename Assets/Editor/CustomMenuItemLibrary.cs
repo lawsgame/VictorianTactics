@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
+using static Battlefield;
 
 public class ContextMenuItemLibrary 
 {
@@ -23,17 +25,33 @@ public class ContextMenuItemLibrary
     static void MainTest(MenuCommand command)
     {
 
-        GameObject groundObject = GameObject.FindGameObjectWithTag("Ground");
-        Tilemap groundTilemap = groundObject.GetComponent<Tilemap>();
-        groundTilemap.CompressBounds();
-        Bounds mapbounds = groundTilemap.localBounds;
-        Debug.Log("Min World Bound: "+mapbounds.min);
-        Debug.Log("Max World Bound: " + mapbounds.max);
+        GameObject go = GameObject.FindGameObjectWithTag("Ground");
+        Tilemap groundTilemap = go.GetComponent<Tilemap>();
+        Debug.Log("cell bounds: "+groundTilemap.cellBounds);
+/*
+        Battlefield.TileMatrix m = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>().GetMapAsTileMatrix();
 
-        TileBase[] tiles = groundTilemap.GetTilesBlock(new BoundsInt(new Vector3Int(-2, -2, 0), new Vector3Int(2, 2, 0)));
-        Debug.Log("number of tiles found: "+tiles.Length);
-        
+        Debug.Log(m.minX);
+        Debug.Log(m.minY);
+        Debug.Log(m.z);
+        for (int i = 0; i < m.tiles.GetLength(0); i++)
+        {
+            for (int j = 0; j < m.tiles.GetLength(1); j++)
+            {
+                WorldTile tile = null;
+                Vector3Int gridpos = m.Get(i, j, out tile);
+                if (tile != null)
+                {
+                    Debug.Log(string.Format("tile {0} at pos {1}", tile, gridpos));
+                }
+            }
+        }*/
 
+        List<WorldTileWrapper> lt = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>().GetMapAsTileList();
+        foreach(WorldTileWrapper t in lt){
+            
+            Debug.Log(string.Format("tile {0} at pos {1}", t.position, t.tile));
+        }
     }
 
 }

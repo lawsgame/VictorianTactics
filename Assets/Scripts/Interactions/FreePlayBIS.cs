@@ -29,7 +29,7 @@ public class FreePlayBIS : BattleInterractionState
 
 
         Tilemap groundMap = Machine.Battlefield().GroundTilemap();
-        List<Unit> units = Machine.Battlefield().Units;
+        List<Unit> units = Machine.Battlefield().Units();
 
         TileBase tile = groundMap.GetTile(clickCellPos);
         WorldTile worldTile = null;

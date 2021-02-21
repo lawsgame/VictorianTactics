@@ -9,16 +9,11 @@ public class Unit : MonoBehaviour
 
     // Start is called before the first frame update
 
-    void Awake()
+    private void Awake()
     {
         GameObject battlefieldObject = GameObject.FindGameObjectWithTag("BattleField");
         battlefieldComponent = battlefieldObject.GetComponent<Battlefield>();
-        
-    }
-
-    private void Start()
-    {
-        battlefieldComponent.Units.Add(this);
+        battlefieldComponent.AddUnit(this);
     }
 
 }

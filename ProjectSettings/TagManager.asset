@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - BattleField
+  - Unit
   layers:
   - Default
   - TransparentFX

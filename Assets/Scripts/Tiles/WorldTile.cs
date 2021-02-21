@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class WorldTile : Tile
 {
 
+    [SerializeField] private GameObject decoration;
     [SerializeField] private string tileName;
     [SerializeField] private int movementCost;
     [SerializeField] private bool traversable;
@@ -16,6 +17,7 @@ public class WorldTile : Tile
     [SerializeField] private int avoidanceBonus;
     [SerializeField] private int defenseBonus;
 
+
     public string TileName { get => tileName;  }
     public int MovementCost { get => movementCost;  }
     public bool Traversable { get => traversable;  }
@@ -24,6 +26,7 @@ public class WorldTile : Tile
     public int AccuracyBonus { get => accuracyBonus;  }
     public int AvoidanceBonus { get => avoidanceBonus;  }
     public int DefenseBonus { get => defenseBonus;  }
+
 
     public override string ToString()
     {
