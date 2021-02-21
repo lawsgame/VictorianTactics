@@ -57,7 +57,7 @@ public class FreePlayBIS : BattleInterractionState
             }
 
             // if an empty tile has been selected, move the selected unit to this tile
-            if (!newSelectedUnit && _selectedUnit != null && worldTile.Traversable)
+            if (!newSelectedUnit && _selectedUnit != null && worldTile.Model.Traversable)
             {
                 Vector3 unitNewWorldPos = groundMap.CellToWorld(clickCellPos);
                 unitNewWorldPos.y += 0.25f;
