@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static WorldTileModel;
 
 public class Battlefield : MonoBehaviour
 {
@@ -81,9 +82,16 @@ public class Battlefield : MonoBehaviour
     private void SetMapDecorations()
     {
         List<WorldTileWrapper> tileWrappers = GetMapAsTileList();
+        Vector3 tileWorldPosition;
         foreach(WorldTileWrapper wrapper in tileWrappers)
         {
-            
+            if (wrapper.tile.HasDecoration)
+            {
+                Debug.Log("Woods at " + wrapper.position);
+                tileWorldPosition = groundTilemap.CellToWorld(wrapper.position);
+                Instantiate(wrapper.tile.decoration, tileWorldPosition, Quaternion.identity);
+                
+            }
         }
         
     }

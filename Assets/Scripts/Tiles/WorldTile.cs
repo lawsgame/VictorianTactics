@@ -8,12 +8,15 @@ using static WorldTileModel;
 public class WorldTile : Tile
 {
 
-    [SerializeField] private GameObject decoration;
+    public GameObject decoration;
+
     [SerializeField] private WorldTileType type;
 
 
     public WorldTileType Type { get => type;  }
     public WorldTileModel Model { get => WorldTileModel.Find(type);  }
+
+    public bool HasDecoration { get => decoration != null;  }
 
 
     public override string ToString()
