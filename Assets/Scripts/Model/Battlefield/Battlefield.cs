@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static WorldTileModel;
+using static WorldTileTemplate;
 
 public class Battlefield : MonoBehaviour
 {
@@ -10,7 +10,10 @@ public class Battlefield : MonoBehaviour
 
     private readonly List<Unit> units = new List<Unit>();
 
-
+    private void Awake()
+    {
+        SetMapDecorations();
+    }
 
     public struct TileMatrix
     {
@@ -73,10 +76,7 @@ public class Battlefield : MonoBehaviour
     }
 
 
-    private void Awake()
-    {
-        SetMapDecorations();
-    }
+    
 
 
     private void SetMapDecorations()

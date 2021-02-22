@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static WorldTileModel;
+using static WorldTileTemplate;
 
 [CreateAssetMenu()]
 public class WorldTile : Tile
@@ -14,7 +14,7 @@ public class WorldTile : Tile
 
 
     public WorldTileType Type { get => type;  }
-    public WorldTileModel Model { get => WorldTileModel.Find(type);  }
+    public WorldTileTemplate Model { get => WorldTileTemplate.Find(type);  }
 
     public bool HasDecoration { get => decoration != null;  }
 
