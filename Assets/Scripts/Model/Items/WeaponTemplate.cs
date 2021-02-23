@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class WeaponTemplate
 {
     public enum WeaponType{
@@ -28,47 +29,57 @@ public class WeaponTemplate
 
     private static readonly Dictionary<WeaponType, WeaponTemplate> weaponTemplates = new Dictionary<WeaponType, WeaponTemplate>();
 
-    static WeaponTemplate()
-    {
-        WeaponTemplate shortSword = new WeaponTemplate();
-        shortSword.Type = WeaponType.ShortSword;
-        shortSword.Class = WeaponClass.Sword;
-        shortSword.SubClass = WeaponSubClass.Standard;
-        shortSword.RangeMin = 1;
-        shortSword.RangeMax = 1;
-        shortSword.PowerMin = 3;
-        shortSword.PowerMax = 5;
-        shortSword.DamageType = DamageType.SLASH;
-        shortSword.Weight = 6;
-        shortSword.Accuracy = 80;
-        shortSword.DropRate = 0.2f;
-        shortSword.DurabilityMax = 40;
-        weaponTemplates.Add(WeaponType.ShortSword, shortSword);
-    }
-
-
     public static WeaponTemplate Find(WeaponType name)
     {
         if (weaponTemplates.ContainsKey(name))
         {
             return weaponTemplates[name];
         }
-        return weaponTemplates[WeaponType.Undefinied];
+        return weaponTemplates[WeaponType.ShortSword];
     }
 
-    public WeaponType Type { get; private set; }
-    public WeaponClass Class { get; private set; }
-    public WeaponSubClass SubClass { get; private set; }
-    public int RangeMin { get; private set; }
-    public int RangeMax { get; private set; }
-    public int PowerMin { get; private set; }
-    public int PowerMax { get; private set; }
-    public DamageType DamageType { get; private set; }
-    public int Weight { get; private set; }
-    public int Accuracy { get; private set; }
-    public float DropRate { get; private set; }
-    public int DurabilityMax { get; private set; }
+    private WeaponType type;
+    private WeaponClass clazz;
+    private WeaponSubClass subClazz;
+    private int rangeMin;
+    private int rangeMax;
+    private int powerMin;
+    private int powerMax;
+    private DamageType damageType;
+    private int weight;
+    private int accuracy;
+    private float dropRate;
+    private int durabilityMax;
 
+    public WeaponType Type() => type;
+    public WeaponClass Class() => clazz;
+    public WeaponSubClass SubClass() => subClazz;
+    public int RangeMin() => rangeMin;
+    public int RangeMax() => rangeMax;
+    public int PowerMin() => powerMin;
+    public int PowerMax() => powerMax;
+    public DamageType GetDamageType() => damageType;
+    public int Weight() => weight;
+    public int Accuracy() => accuracy;
+    public float DropRate() => dropRate;
+    public int DurabilityMax() => durabilityMax;
 
-    
+    static WeaponTemplate()
+    {
+        WeaponTemplate shortSword = new WeaponTemplate();
+        shortSword.type = WeaponType.ShortSword;
+        shortSword.clazz = WeaponClass.Sword;
+        shortSword.subClazz = WeaponSubClass.Standard;
+        shortSword.rangeMin = 1;
+        shortSword.rangeMax = 1;
+        shortSword.powerMin = 3;
+        shortSword.powerMax = 5;
+        shortSword.damageType = DamageType.SLASH;
+        shortSword.weight = 6;
+        shortSword.accuracy = 80;
+        shortSword.dropRate = 0.2f;
+        shortSword.durabilityMax = 40;
+        weaponTemplates.Add(WeaponType.ShortSword, shortSword);
+    }
+
 }

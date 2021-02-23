@@ -6,6 +6,9 @@ public class Unit : MonoBehaviour
 {
 
     private Battlefield battlefieldComponent;
+    private UnitModel _model;
+
+    public UnitModel Model() => _model;
 
     // Start is called before the first frame update
 
