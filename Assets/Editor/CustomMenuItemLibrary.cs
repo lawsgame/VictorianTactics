@@ -26,32 +26,16 @@ public class ContextMenuItemLibrary
     {
 
         GameObject go = GameObject.FindGameObjectWithTag("Ground");
+        Battlefield bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>();
         Tilemap groundTilemap = go.GetComponent<Tilemap>();
-        Debug.Log("cell bounds: "+groundTilemap.cellBounds);
-/*
-        Battlefield.TileMatrix m = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>().GetMapAsTileMatrix();
 
-        Debug.Log(m.minX);
-        Debug.Log(m.minY);
-        Debug.Log(m.z);
-        for (int i = 0; i < m.tiles.GetLength(0); i++)
+        List<Unit> units = bf.Units();
+        foreach(Unit u in units)
         {
-            for (int j = 0; j < m.tiles.GetLength(1); j++)
-            {
-                WorldTile tile = null;
-                Vector3Int gridpos = m.Get(i, j, out tile);
-                if (tile != null)
-                {
-                    Debug.Log(string.Format("tile {0} at pos {1}", tile, gridpos));
-                }
-            }
-        }*/
-
-        List<WorldTileWrapper> lt = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>().GetMapAsTileList();
-        foreach(WorldTileWrapper t in lt){
-            
-            Debug.Log(string.Format("tile {0} at pos {1}", t.position, t.tile));
+            //Debug.Log(string.Format(" {0} with HP [1} and STR {2} ", u.gameObject.name, u.Model().HitPoints(), u.Model().Strength()));
+            Debug.Log(string.Format(" {0} with HP {1} and STR {2} ", u.gameObject.name, u.Model().HitPoints(), u.Model().Strength()));
         }
+        
     }
 
 }

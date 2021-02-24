@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using static UnitTemplate;
+using UnityEngine;
 
 [System.Serializable]
 public class UnitModel
@@ -9,7 +10,6 @@ public class UnitModel
     private int _level;
     private UnitTemplate _template;
     private List<WeaponModel> _carriedWeapons;
-
     private int _hitPoints;
     private int _strength;
     private int _dexterity;
@@ -45,6 +45,63 @@ public class UnitModel
         return 0;
     }
         
-    public WeaponModel CurrentWeapon() => (_carriedWeapons.Count > 0) ? _carriedWeapons.ElementAt<WeaponModel>(0) : null;
+    public WeaponModel CurrentWeapon() => (_carriedWeapons != null &&_carriedWeapons.Count > 0) ? _carriedWeapons.ElementAt<WeaponModel>(0) : null;
+
+    private UnitModel() { }
+
+    public static UnitModel create(int startLevel, UnitType type, List<WeaponModel> carriedWeapons, bool randomLevelUp)
+    {
+        UnitModel unit = new UnitModel();
+        unit._level = 1;
+        unit._template = UnitTemplate.Find(type);
+        unit._carriedWeapons = carriedWeapons;
+        unit._agility = unit._template.BaseAgility();
+        unit._bravery = unit._template.BaseBravery();
+        unit._dexterity = unit._template.BaseDexterity();
+        unit._endurance = unit._template.BaseEndurance();
+        unit._hitPoints = unit._template.BaseHitPoints();
+        unit._strength = unit._template.BaseStrength();
+
+        if (randomLevelUp)
+        {
+            while (unit._level < startLevel)
+            {
+                unit.levelUp();
+            }
+        }
+        else
+        {
+            unit._agility += (int)((startLevel - 1) * unit._template.BaseGrowthAgility()) ;
+            unit._bravery += (int)((startLevel - 1) * unit._template.BaseGrowthBravery());
+            unit._dexterity += (int)((startLevel - 1) * unit._template.BaseGrowthDexterity());
+            unit._endurance += (int)((startLevel - 1) * unit._template.BaseGrowthEndurance());
+            unit._hitPoints += (int)((startLevel - 1) * unit._template.BaseGrowthHitPoints());
+            unit._strength += (int)((startLevel - 1) * unit._template.BaseGrowthStrength());
+        }
+        
+
+        return unit;
+    }
+
+    public int[] levelUp()
+    {
+        _level++;
+        int[] statGained = new int[6];
+        statGained[0] = (Random.value < _template.BaseGrowthHitPoints()) ? 1 : 0;
+        statGained[1] = (Random.value < _template.BaseGrowthStrength()) ? 1 : 0;
+        statGained[2] = (Random.value < _template.BaseGrowthDexterity()) ? 1 : 0;
+        statGained[3] = (Random.value < _template.BaseGrowthEndurance()) ? 1 : 0;
+        statGained[4] = (Random.value < _template.BaseGrowthAgility()) ? 1 : 0;
+        statGained[5] = (Random.value < _template.BaseGrowthBravery()) ? 1 : 0;
+
+        _hitPoints += statGained[0];
+        _strength += statGained[1];
+        _dexterity += statGained[2];
+        _endurance += statGained[3];
+        _agility += statGained[4];
+        _bravery += statGained[5];
+
+        return statGained;
+    }
     
 }

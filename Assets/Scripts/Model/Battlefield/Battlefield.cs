@@ -76,20 +76,18 @@ public class Battlefield : MonoBehaviour
     }
 
 
-    
-
-
     private void SetMapDecorations()
     {
         List<WorldTileWrapper> tileWrappers = GetMapAsTileList();
         Vector3 tileWorldPosition;
+        GameObject decoration;
         foreach(WorldTileWrapper wrapper in tileWrappers)
         {
             if (wrapper.tile.HasDecoration)
             {
-                Debug.Log("Woods at " + wrapper.position);
                 tileWorldPosition = groundTilemap.CellToWorld(wrapper.position);
-                Instantiate(wrapper.tile.decoration, tileWorldPosition, Quaternion.identity);
+                decoration = Instantiate(wrapper.tile.decoration, tileWorldPosition, Quaternion.identity);
+                decoration.transform.SetParent(this.gameObject.transform);
                 
             }
         }

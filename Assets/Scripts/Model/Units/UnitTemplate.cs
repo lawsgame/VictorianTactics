@@ -73,12 +73,12 @@ public class UnitTemplate
         solarKnight._type = UnitType.SolarKnight;
         solarKnight._baseHitPoints = 10;
         solarKnight._baseStrenght = 3;
-        solarKnight._baseDexterity = 2;
+        solarKnight._baseDexterity = 3;
         solarKnight._baseEndurance = 3;
-        solarKnight._baseAgility = 1;
+        solarKnight._baseAgility = 3;
         solarKnight._baseBravery = 5;
         solarKnight._baseGrowthHitPoints = 0.5f;
-        solarKnight._baseGrowthStrength = 0.2f;
+        solarKnight._baseGrowthStrength = 0.4f;
         solarKnight._baseGrowthDexterity = 0.2f;
         solarKnight._baseGrowthAgility = 0.2f;
         solarKnight._baseGrowthEndurance = 0.2f;

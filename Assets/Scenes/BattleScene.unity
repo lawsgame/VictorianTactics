@@ -235,6 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39603de4d83ae924eb2b22d67113fd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battlefield: {fileID: 982281584}
+  startingLevel: 5
+  randomLevelUp: 1
+  type: 0
+  weaponTypes: 00000000
 --- !u!1 &264449927
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39603de4d83ae924eb2b22d67113fd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battlefield: {fileID: 982281584}
+  startingLevel: 10
+  randomLevelUp: 0
+  type: 0
+  weaponTypes: 00000000
 --- !u!1 &352423213
 GameObject:
   m_ObjectHideFlags: 0
