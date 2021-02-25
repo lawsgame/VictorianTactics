@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using static Battlefield;
+using Pathfinder;
 
 public class ContextMenuItemLibrary 
 {
@@ -28,14 +29,34 @@ public class ContextMenuItemLibrary
         GameObject go = GameObject.FindGameObjectWithTag("Ground");
         Battlefield bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>();
         Tilemap groundTilemap = go.GetComponent<Tilemap>();
-
         List<Unit> units = bf.Units();
-        foreach(Unit u in units)
+
+
+        Node node1 = new Node(null, Vector3Int.one,     1,4) ;
+        Node node2 = new Node(null, Vector3Int.one * 2, 0,3) ;
+        Node node3 = new Node(null, Vector3Int.one * 3, 5,9);
+        Node node4 = new Node(null, Vector3Int.one * 4, 3, 2);
+
+
+
+        List<Node> nodes = new List<Node>
         {
-            //Debug.Log(string.Format(" {0} with HP [1} and STR {2} ", u.gameObject.name, u.Model().HitPoints(), u.Model().Strength()));
-            Debug.Log(string.Format(" {0} with HP {1} and STR {2} ", u.gameObject.name, u.Model().HitPoints(), u.Model().Strength()));
-        }
-        
+            node1,
+            node2,
+            node3,
+            node4
+        };
+
+        foreach(Node nn in nodes) Debug.Log(nn.ToLongString());
+
+        Debug.Log(string.Join(", ", nodes));
+        Debug.Log("sorting");
+        nodes.Sort();
+        Debug.Log(string.Join(", ", nodes));
+
+        // test GetPath as well
+
+
     }
 
 }

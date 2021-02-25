@@ -942,11 +942,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908858274}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 792c47c64f8fbc44d859f542f3ddc049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BattlefieldObject: {fileID: 982281584}
 --- !u!4 &1908858276
 Transform:
   m_ObjectHideFlags: 0

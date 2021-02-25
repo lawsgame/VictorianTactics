@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class BattleInterractionState:State
 {
-    protected BattleInterractionMachine Machine { get; }
+    protected BattleController Controller { get; }
 
-    public BattleInterractionState(BattleInterractionMachine machine)
+    public BattleInterractionState(BattleController machine)
     {
-        Machine = machine;
+        Controller = machine;
     }
 
     public abstract void Init();

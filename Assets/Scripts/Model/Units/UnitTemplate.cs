@@ -71,6 +71,7 @@ public class UnitTemplate
     {
         UnitTemplate solarKnight = new UnitTemplate();
         solarKnight._type = UnitType.SolarKnight;
+        solarKnight._weaponMastered = WeaponClass.Sword;
         solarKnight._baseHitPoints = 10;
         solarKnight._baseStrenght = 3;
         solarKnight._baseDexterity = 3;

@@ -7,13 +7,13 @@ public class FreePlayBIS : BattleInterractionState
     private GameObject _selectedUnit;
     private Vector3Int _selectedCell;
 
-    public FreePlayBIS(BattleInterractionMachine machine) : base(machine)
+    public FreePlayBIS(BattleController controller) : base(controller)
     {
     }
 
     public override void Dispose()
     {
-        Debug.Log("Dispode of FreePlayBIS");
+        Debug.Log("Dispode FreePlayBIS");
     }
 
     public override void End()
@@ -28,8 +28,8 @@ public class FreePlayBIS : BattleInterractionState
         Debug.Log("clicked screen location: " + MousePosition+" / clicked cell: "+clickCellPos);
 
 
-        Tilemap groundMap = Machine.Battlefield().GroundTilemap();
-        List<Unit> units = Machine.Battlefield().Units();
+        Tilemap groundMap = Controller.Battlefield().GroundTilemap();
+        List<Unit> units = Controller.Battlefield().Units();
 
         TileBase tile = groundMap.GetTile(clickCellPos);
         WorldTile worldTile = null;
