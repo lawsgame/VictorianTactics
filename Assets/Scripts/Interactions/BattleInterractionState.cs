@@ -16,6 +16,9 @@ public abstract class BattleInterractionState:State
     public abstract void Dispose();
 
 
-    public abstract void handleInput(Vector3Int cellPos, Vector2 MousePosition);
-    
+    public abstract void OnTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile);
+    public abstract void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile);
+    public abstract void Pan(Vector2 worldPos, Vector2 MousePosition);
+    public abstract void OnKeyPressed(KeyCode keyCode);
+
 }

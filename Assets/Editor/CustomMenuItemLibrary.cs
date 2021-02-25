@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using static Battlefield;
-using Pathfinder;
+using Tactics.Pathfinder;
 
 public class ContextMenuItemLibrary 
 {

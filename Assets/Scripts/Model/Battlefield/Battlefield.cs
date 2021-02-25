@@ -4,15 +4,58 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static WorldTileTemplate;
 
+[System.Serializable]
 public class Battlefield : MonoBehaviour
 {
-    [SerializeField] private Tilemap groundTilemap;
+    [SerializeField] private Tilemap groundmap;
 
-    private readonly List<Unit> units = new List<Unit>();
+    private List<Unit> units = new List<Unit>();
+    private Dictionary<Vector3Int, Unit> unitMapPos = new Dictionary<Vector3Int, Unit>();
+
+    public Tilemap GroundTilemap() => groundmap;
+    public List<Unit> Units() => Units(true);
+    public Unit GetUnitFromMapPos(Vector3Int mapPos) => (unitMapPos.ContainsKey(mapPos)) ? unitMapPos[mapPos] : null;
+
+
+    public void AddUnit(Unit unit) {
+        units.Add(unit);
+        Vector3Int mapPos = groundmap.WorldToCell(unit.transform.position);
+        unitMapPos[mapPos] = unit;
+    }
+
+    public List<Unit> Units(bool activeOnly)
+    {
+        List<Unit> activeUnits = new List<Unit>();
+        foreach (Unit u in units)
+        {
+            if (u.gameObject.activeInHierarchy || !activeOnly)
+            {
+                activeUnits.Add(u);
+            }
+        }
+        return activeUnits;
+    }
 
     private void Awake()
     {
-        SetMapDecorations();
+        List<WorldTileWrapper> worldMapTiles = GetMapAsTileList();
+        SetMapDecorations(worldMapTiles);
+    }
+
+    private void SetMapDecorations(List<WorldTileWrapper> worldMap)
+    {
+        Vector3 tileWorldPosition;
+        GameObject decoration;
+        foreach(WorldTileWrapper tileWrapper in worldMap)
+        {
+            if (tileWrapper.tile.HasDecoration)
+            {
+                tileWorldPosition = groundmap.CellToWorld(tileWrapper.position);
+                decoration = Instantiate(tileWrapper.tile.decoration, tileWorldPosition, Quaternion.identity);
+                decoration.transform.SetParent(this.gameObject.transform);
+                
+            }
+        }
     }
 
     public struct TileMatrix
@@ -32,12 +75,12 @@ public class Battlefield : MonoBehaviour
 
         public bool HasTile(int i, int j)
         {
-            return tiles[i,j] != null;
-        } 
+            return tiles[i, j] != null;
+        }
 
-        public Vector3Int Get(int i,  int j, out WorldTile tile)
+        public Vector3Int Get(int i, int j, out WorldTile tile)
         {
-            tile = tiles[i,j];
+            tile = tiles[i, j];
             return new Vector3Int(minX + i, minY + j, z);
         }
 
@@ -56,49 +99,10 @@ public class Battlefield : MonoBehaviour
     }
 
 
-
-    public Tilemap GroundTilemap() => groundTilemap;
-    public void AddUnit(Unit unit) => units.Add(unit);
-    public List<Unit> Units() => Units(true);
-
-
-    public List<Unit> Units(bool activeOnly)
-    {
-        List<Unit> activeUnits = new List<Unit>();
-        foreach(Unit u in units)
-        {
-            if (u.gameObject.activeInHierarchy || !activeOnly)
-            {
-                activeUnits.Add(u);
-            }
-        }
-        return activeUnits;
-    }
-
-
-    private void SetMapDecorations()
-    {
-        List<WorldTileWrapper> tileWrappers = GetMapAsTileList();
-        Vector3 tileWorldPosition;
-        GameObject decoration;
-        foreach(WorldTileWrapper wrapper in tileWrappers)
-        {
-            if (wrapper.tile.HasDecoration)
-            {
-                tileWorldPosition = groundTilemap.CellToWorld(wrapper.position);
-                decoration = Instantiate(wrapper.tile.decoration, tileWorldPosition, Quaternion.identity);
-                decoration.transform.SetParent(this.gameObject.transform);
-                
-            }
-        }
-        
-    }
-
-
     public TileMatrix GetMapAsTileMatrix()
     {
-        groundTilemap.CompressBounds();
-        BoundsInt worldBounds = groundTilemap.cellBounds;
+        groundmap.CompressBounds();
+        BoundsInt worldBounds = groundmap.cellBounds;
         TileMatrix matrix = new TileMatrix(worldBounds, 0);
         Vector3Int gridPosition;
         for (int i = worldBounds.min.x; i <= worldBounds.max.x; i++)
@@ -106,9 +110,9 @@ public class Battlefield : MonoBehaviour
             for (int j = worldBounds.min.y; j <= worldBounds.max.y; j++)
             {
                 gridPosition = new Vector3Int(i, j, 0);
-                if (groundTilemap.HasTile(gridPosition))
+                if (groundmap.HasTile(gridPosition))
                 {
-                    WorldTile tile = groundTilemap.GetTile(gridPosition) as WorldTile;
+                    WorldTile tile = groundmap.GetTile(gridPosition) as WorldTile;
                     matrix.tiles[i - worldBounds.min.x, j - worldBounds.min.y] = tile;
                 }
             }
@@ -119,8 +123,8 @@ public class Battlefield : MonoBehaviour
 
     public List<WorldTileWrapper> GetMapAsTileList()
     {
-        groundTilemap.CompressBounds();
-        BoundsInt worldBounds = groundTilemap.cellBounds;
+        groundmap.CompressBounds();
+        BoundsInt worldBounds = groundmap.cellBounds;
         List<WorldTileWrapper> tileList = new List<WorldTileWrapper>();
         Vector3Int gridPosition;
         for (int i = worldBounds.min.x; i <= worldBounds.max.x; i++)
@@ -128,9 +132,9 @@ public class Battlefield : MonoBehaviour
             for (int j = worldBounds.min.y; j <= worldBounds.max.y; j++)
             {
                 gridPosition = new Vector3Int(i, j, 0);
-                if (groundTilemap.HasTile(gridPosition))
+                if (groundmap.HasTile(gridPosition))
                 {
-                    WorldTile tile = groundTilemap.GetTile(gridPosition) as WorldTile;
+                    WorldTile tile = groundmap.GetTile(gridPosition) as WorldTile;
                     tileList.Add(new WorldTileWrapper(gridPosition, tile));
                 }
             }

@@ -11,34 +11,40 @@ public class FreePlayBIS : BattleInterractionState
     {
     }
 
-    public override void Dispose()
+    public override void Init() => Debug.Log("Init FreePlayBIS");
+    public override void Dispose() =>  Debug.Log("Dispode FreePlayBIS");
+    public override void End() =>  Debug.Log("End FreePlayBIS");
+
+    public override void OnKeyPressed(KeyCode keyCode) => Debug.Log("Key pressed: " + keyCode);
+    public override void Pan(Vector2 worldPos, Vector2 MousePosition) => Debug.Log("Pan on " + worldPos);
+
+    public override void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile)
     {
-        Debug.Log("Dispode FreePlayBIS");
+
+        Debug.Log("Long touch on: " + cellPos + " where *** is standing");
     }
 
-    public override void End()
+    public override void OnTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePosition, WorldTile touchedTile)
     {
-        Debug.Log("End FreePlayBIS");
-    }
+        Debug.Log(string.Format("Inputs {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, touchedTile));
 
-    public override void handleInput(Vector3Int clickCellPos, Vector2 MousePosition)
-    {
         // register which cell is clicked
-        _selectedCell = clickCellPos;
-        Debug.Log("clicked screen location: " + MousePosition+" / clicked cell: "+clickCellPos);
+        _selectedCell = cellPos;
+        Debug.Log("clicked screen location: " + mousePosition + " / clicked cell: " + cellPos);
 
 
         Tilemap groundMap = Controller.Battlefield().GroundTilemap();
         List<Unit> units = Controller.Battlefield().Units();
 
-        TileBase tile = groundMap.GetTile(clickCellPos);
+        TileBase tile = groundMap.GetTile(cellPos);
         WorldTile worldTile = null;
-        if (tile is WorldTile){
+        if (tile is WorldTile)
+        {
             worldTile = tile as WorldTile;
             Debug.Log(worldTile.ToString());
         }
 
-        if(worldTile != null)
+        if (worldTile != null)
         {
             // check if one of the unit has been selected
             bool newSelectedUnit = false;
@@ -47,7 +53,7 @@ public class FreePlayBIS : BattleInterractionState
             {
                 unitCellPos = groundMap.WorldToCell(unit.gameObject.transform.position);
 
-                if (clickCellPos.Equals(unitCellPos))
+                if (cellPos.Equals(unitCellPos))
                 {
                     newSelectedUnit = true;
                     _selectedUnit = unit.gameObject;
@@ -59,17 +65,13 @@ public class FreePlayBIS : BattleInterractionState
             // if an empty tile has been selected, move the selected unit to this tile
             if (!newSelectedUnit && _selectedUnit != null && worldTile.Model.Traversable)
             {
-                Vector3 unitNewWorldPos = groundMap.CellToWorld(clickCellPos);
+                Vector3 unitNewWorldPos = groundMap.CellToWorld(cellPos);
                 unitNewWorldPos.y += 0.25f;
                 _selectedUnit.transform.position = unitNewWorldPos;
                 Debug.Log(string.Format("{0} unit displaced to {1}", _selectedUnit.name, _selectedCell));
             }
         }
-        
     }
 
-    public override void Init()
-    {
-        Debug.Log("Init FreePlayBIS");
-    }
+    
 }
