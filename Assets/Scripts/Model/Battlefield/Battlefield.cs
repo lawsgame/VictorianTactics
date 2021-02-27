@@ -9,32 +9,13 @@ public class Battlefield : MonoBehaviour
 {
     [SerializeField] private Tilemap groundmap;
 
-    private List<Unit> units = new List<Unit>();
-    private Dictionary<Vector3Int, Unit> unitMapPos = new Dictionary<Vector3Int, Unit>();
+    private IUnitGroup _unitGroup = null;
 
-    public Tilemap GroundTilemap() => groundmap;
-    public List<Unit> Units() => Units(true);
-    public Unit GetUnitFromMapPos(Vector3Int mapPos) => (unitMapPos.ContainsKey(mapPos)) ? unitMapPos[mapPos] : null;
+    public Tilemap Groundmap() => groundmap;
+    public IUnitGroup UnitGroup() => _unitGroup;
+    
 
-
-    public void AddUnit(Unit unit) {
-        units.Add(unit);
-        Vector3Int mapPos = groundmap.WorldToCell(unit.transform.position);
-        unitMapPos[mapPos] = unit;
-    }
-
-    public List<Unit> Units(bool activeOnly)
-    {
-        List<Unit> activeUnits = new List<Unit>();
-        foreach (Unit u in units)
-        {
-            if (u.gameObject.activeInHierarchy || !activeOnly)
-            {
-                activeUnits.Add(u);
-            }
-        }
-        return activeUnits;
-    }
+    /**  BATTLE FIELD COMPONENT INITIALIZATION **/
 
     private void Awake()
     {
@@ -56,6 +37,13 @@ public class Battlefield : MonoBehaviour
                 
             }
         }
+    }
+
+    public void AddToGroup(Unit unit)
+    {
+        if(_unitGroup == null)
+            _unitGroup = new UnitGroup(this.groundmap);
+        _unitGroup.Add(unit);
     }
 
     public struct TileMatrix

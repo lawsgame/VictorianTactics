@@ -31,8 +31,8 @@ public class BattleController : MonoBehaviour
         {
             Vector2 mousePos = Input.mousePosition;
             Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int tilePos = _battlefield.GroundTilemap().WorldToCell(worldPos);
-            WorldTile worldTile = _battlefield.GroundTilemap().GetTile<WorldTile>(tilePos);
+            Vector3Int tilePos = _battlefield.Groundmap().WorldToCell(worldPos);
+            WorldTile worldTile = _battlefield.Groundmap().GetTile<WorldTile>(tilePos);
             _battleInterractionStateMachine.GetCurrentState().OnTouch(tilePos, worldPos, mousePos, worldTile);
         }
     }

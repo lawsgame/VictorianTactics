@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         Battlefield battlefieldComponent = battlefield.GetComponent<Battlefield>();
-        battlefieldComponent.AddUnit(this);
+        battlefieldComponent.AddToGroup(this);
         List<WeaponModel> weapons = new List<WeaponModel>();
         foreach(WeaponType weaponType in weaponTypes)
         {
@@ -29,5 +29,4 @@ public class Unit : MonoBehaviour
         }
         _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp);
     }
-
 }

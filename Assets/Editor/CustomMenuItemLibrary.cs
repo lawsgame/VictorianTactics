@@ -4,9 +4,46 @@ using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using static Battlefield;
 using Tactics.Pathfinder;
+using System.Linq;
 
-public class ContextMenuItemLibrary 
+public class MenuItemLibrary 
 {
+
+    //*** TESTS
+    
+    [MenuItem("CONTEXT/Transform/OutTest")]
+    static void CurrentTest(MenuCommand command)
+    {
+
+        List<int> intlist = new List<int>{ 1,2,3,4,5};
+        var newlist = intlist.Select((value, index) => value + index);
+        Debug.Log(string.Join(",", newlist));
+
+        Dictionary<string, int> dico = new Dictionary<string, int>();
+        dico.Add("first", 1);
+        dico.Add("second", 2);
+        dico.Add("third", 3);
+        var newdoc = dico.Select(pair => (pair.Key.Substring(0,2), pair.Value));
+        var docList = dico.Select(pair => string.Format("key {0} => value {1}",pair.Key, pair.Value));
+        foreach (var de in docList)
+            Debug.Log(de);
+        Debug.Log(string.Join(", ", docList));
+        
+    }
+
+    [MenuItem("CONTEXT/Transform/PlayTest")]
+    static void PLayTest(MenuCommand command)
+    {
+
+        GameObject go = GameObject.FindGameObjectWithTag("Ground");
+        Battlefield bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>();
+        Tilemap groundTilemap = go.GetComponent<Tilemap>();
+        List<Unit> units = bf.UnitGroup().GetUnits();
+
+    }
+
+
+    //*** GAME TOOLS 
 
     [MenuItem("CONTEXT/Transform/Center On Closest Cell")]
     static void CenterOnCell(MenuCommand command)
@@ -19,44 +56,15 @@ public class ContextMenuItemLibrary
         Vector3 ajustedWorldPos = groundTilemap.CellToWorld(cellPos);
         ajustedWorldPos.y += 0.25f;
         t.position = ajustedWorldPos;
-        
+
     }
 
-    [MenuItem("CONTEXT/Transform/Main Test")]
-    static void MainTest(MenuCommand command)
+
+    [MenuItem("CONTEXT/Battlefield/Show UnitGroup")]
+    static void ShowUnitGroup(MenuCommand command)
     {
-
-        GameObject go = GameObject.FindGameObjectWithTag("Ground");
-        Battlefield bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>();
-        Tilemap groundTilemap = go.GetComponent<Tilemap>();
-        List<Unit> units = bf.Units();
-
-
-        Node node1 = new Node(null, Vector3Int.one,     1,4) ;
-        Node node2 = new Node(null, Vector3Int.one * 2, 0,3) ;
-        Node node3 = new Node(null, Vector3Int.one * 3, 5,9);
-        Node node4 = new Node(null, Vector3Int.one * 4, 3, 2);
-
-
-
-        List<Node> nodes = new List<Node>
-        {
-            node1,
-            node2,
-            node3,
-            node4
-        };
-
-        foreach(Node nn in nodes) Debug.Log(nn.ToLongString());
-
-        Debug.Log(string.Join(", ", nodes));
-        Debug.Log("sorting");
-        nodes.Sort();
-        Debug.Log(string.Join(", ", nodes));
-
-        // test GetPath as well
-
-
+        Battlefield bf = command.context as Battlefield;
+        Debug.Log(bf.UnitGroup().ToString());
     }
 
 }
