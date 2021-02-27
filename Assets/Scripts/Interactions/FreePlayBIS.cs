@@ -17,19 +17,19 @@ public class FreePlayBIS : BattleInterractionState
     public override void Dispose() =>  Debug.Log("Dispode FreePlayBIS");
     public override void End() =>  Debug.Log("End FreePlayBIS");
 
-    public override void OnPan(Vector2 worldPos, Vector2 mousePos, Vector2 mouseDl, Vector2 worldDl) => Debug.Log("Pan on " + worldPos);
+    public override void OnPan(Vector2 worldPos, Vector2 mousePos, Vector2 mouseDl, Vector2 worldDl) => Debug.Log("Pan on " + mousePos);
 
 
     public override void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile)
     {
         Unit touchedUnit = Controller.Battlefield().UnitGroup().GetUnitFrom(cellPos);
-        Debug.Log("Long touch on: " + touchedTile + ((touchedUnit !=null) ? " where "+ touchedUnit+" is standing" : ""));
+        Debug.Log("Long touch on " + touchedTile + ((touchedUnit !=null) ? " where "+ touchedUnit+" is standing" : ""));
     }
 
 
     public override void OnTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePosition, WorldTile worldTile)
     {
-        Debug.Log(string.Format("Inputs {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
+        Debug.Log(string.Format("Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
 
         _selectedCell = cellPos;
         
