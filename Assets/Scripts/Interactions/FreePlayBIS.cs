@@ -17,13 +17,13 @@ public class FreePlayBIS : BattleInterractionState
     public override void Dispose() =>  Debug.Log("Dispode FreePlayBIS");
     public override void End() =>  Debug.Log("End FreePlayBIS");
 
-    public override void OnKeyPressed(KeyCode keyCode) => Debug.Log("Key pressed: " + keyCode);
-    public override void Pan(Vector2 worldPos, Vector2 MousePosition) => Debug.Log("Pan on " + worldPos);
+    public override void OnPan(Vector2 worldPos, Vector2 mousePos, Vector2 mouseDl, Vector2 worldDl) => Debug.Log("Pan on " + worldPos);
 
 
     public override void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile)
     {
-        Debug.Log("Long touch on: " + cellPos + " where *** is standing");
+        Unit touchedUnit = Controller.Battlefield().UnitGroup().GetUnitFrom(cellPos);
+        Debug.Log("Long touch on: " + touchedTile + ((touchedUnit !=null) ? " where "+ touchedUnit+" is standing" : ""));
     }
 
 

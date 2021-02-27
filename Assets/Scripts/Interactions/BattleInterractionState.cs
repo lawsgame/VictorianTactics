@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BattleInterractionState:State
+public abstract class BattleInterractionState: State
 {
     protected BattleController Controller { get; }
 
-    public BattleInterractionState(BattleController machine)
+    public BattleInterractionState(BattleController controller)
     {
-        Controller = machine;
+        Controller = controller;
     }
 
     public abstract void Init();
     public abstract void End();
     public abstract void Dispose();
 
-
-    public abstract void OnTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile);
-    public abstract void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile);
-    public abstract void Pan(Vector2 worldPos, Vector2 MousePosition);
-    public abstract void OnKeyPressed(KeyCode keyCode);
+    public abstract void OnTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePos, WorldTile touchedTile);
+    public abstract void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePos, WorldTile touchedTile);
+    public abstract void OnPan(Vector2 worldPos, Vector2 mousePos, Vector2 mouseDl, Vector2 worldDl);
+    
 
 }

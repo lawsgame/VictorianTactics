@@ -29,4 +29,6 @@ public class Unit : MonoBehaviour
         }
         _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp);
     }
+
+    public override string ToString() => Model().ToString();
 }

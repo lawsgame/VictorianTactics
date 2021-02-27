@@ -106,7 +106,7 @@ public class UnitModel
 
     public override string ToString()
     {
-        return string.Format("{0} lvl {1}", _template.Type(),_level); 
+        return string.Format("Unit({0} lvl {1})", _template.Type(),_level); 
     }
     
 }
