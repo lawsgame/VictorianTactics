@@ -4,14 +4,33 @@ using UnityEngine;
 
 public abstract class BattleCommand : Command
 {
-    public abstract bool IsExecutable();
-    public abstract bool IsUndoable();
-    public abstract void execute();
-    public abstract void undo();
+    private bool _done = false;
 
+    public bool Done => _done;
 
-    public abstract class ActorCommand: BattleCommand
+    public void execute()
     {
-
+        if (!_done)
+        {
+            _done = true;
+            Apply();
+        }
+        else Debug.LogWarningFormat("Command ({0}) already done, apply is aborted", this);
     }
+
+    public void undo()
+    {
+        if (_done)
+        {
+            _done = false;
+            Unapply();
+        }
+        else Debug.LogWarningFormat("Command ({0}) not executed, no unapply to do", this);
+    }
+
+    public abstract bool IsUndoable();
+    public abstract bool IsExecutable();
+    public abstract void Apply();
+    public abstract void Unapply();
+
 }

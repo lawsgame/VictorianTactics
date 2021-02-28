@@ -4,8 +4,8 @@ using UnityEngine.Tilemaps;
 
 public class FreePlayBIS : BattleInterractionState
 {
-    private GameObject _selectedUnit;
-    private Vector3Int _selectedCell;
+    private Unit _selectedUnit;
+   
 
     public FreePlayBIS(BattleController controller) : base(controller)
     {
@@ -29,8 +29,6 @@ public class FreePlayBIS : BattleInterractionState
     {
         Debug.Log(string.Format("Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
 
-        _selectedCell = cellPos;
-        
         if (worldTile != null)
         {
             // check if one of the unit has been selected
@@ -38,7 +36,7 @@ public class FreePlayBIS : BattleInterractionState
             
             if(touchedUnit != null)
             { 
-                _selectedUnit = touchedUnit.gameObject;
+                _selectedUnit = touchedUnit;
                 Debug.Log("New selected unit: " + touchedUnit.name);
             }
             
@@ -46,10 +44,9 @@ public class FreePlayBIS : BattleInterractionState
             // if an empty tile has been selected, move the selected unit to this tile
             if (touchedUnit == null && _selectedUnit != null && worldTile.Model.Traversable)
             {
-                Vector3 unitNewWorldPos = Controller.Battlefield.Groundmap.CellToWorld(cellPos);
-                unitNewWorldPos.y += 0.25f;
-                _selectedUnit.transform.position = unitNewWorldPos;
-                Debug.Log(string.Format("{0} unit displaced to {1}", _selectedUnit.name, _selectedCell));
+                DisplaceCommand currentCommand = new DisplaceCommand(Controller.Battlefield.Groundmap, _selectedUnit, cellPos);
+                if (currentCommand.IsExecutable())
+                    currentCommand.Apply();
             }
         }
     }
