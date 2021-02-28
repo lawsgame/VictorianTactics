@@ -6,11 +6,9 @@ public class FreePlayBIS : BattleInterractionState
 {
     private GameObject _selectedUnit;
     private Vector3Int _selectedCell;
-    private Tilemap _groundMap;
 
     public FreePlayBIS(BattleController controller) : base(controller)
     {
-        _groundMap = controller.Battlefield().Groundmap();
     }
 
     public override void Init() => Debug.Log("Init FreePlayBIS");
@@ -22,7 +20,7 @@ public class FreePlayBIS : BattleInterractionState
 
     public override void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile)
     {
-        Unit touchedUnit = Controller.Battlefield().UnitGroup().GetUnitFrom(cellPos);
+        Unit touchedUnit = Controller.Battlefield.GetUnitFrom(cellPos);
         Debug.Log("Long touch on " + touchedTile + ((touchedUnit !=null) ? " where "+ touchedUnit+" is standing" : ""));
     }
 
@@ -33,13 +31,10 @@ public class FreePlayBIS : BattleInterractionState
 
         _selectedCell = cellPos;
         
-        List<Unit> units = Controller.Battlefield().UnitGroup().GetUnits();
-
-
         if (worldTile != null)
         {
             // check if one of the unit has been selected
-            Unit touchedUnit = Controller.Battlefield().UnitGroup().GetUnitFrom(cellPos);
+            Unit touchedUnit = Controller.Battlefield.GetUnitFrom(cellPos);
             
             if(touchedUnit != null)
             { 
@@ -51,7 +46,7 @@ public class FreePlayBIS : BattleInterractionState
             // if an empty tile has been selected, move the selected unit to this tile
             if (touchedUnit == null && _selectedUnit != null && worldTile.Model.Traversable)
             {
-                Vector3 unitNewWorldPos = _groundMap.CellToWorld(cellPos);
+                Vector3 unitNewWorldPos = Controller.Battlefield.Groundmap.CellToWorld(cellPos);
                 unitNewWorldPos.y += 0.25f;
                 _selectedUnit.transform.position = unitNewWorldPos;
                 Debug.Log(string.Format("{0} unit displaced to {1}", _selectedUnit.name, _selectedCell));

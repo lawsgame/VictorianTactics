@@ -9,10 +9,10 @@ public class Battlefield : MonoBehaviour
 {
     [SerializeField] private Tilemap groundmap;
 
-    private IUnitGroup _unitGroup = null;
+    private List<Unit> _units = null;
 
-    public Tilemap Groundmap() => groundmap;
-    public IUnitGroup UnitGroup() => _unitGroup;
+    public Tilemap Groundmap => groundmap;
+    public List<Unit> Units() => Units(true);
     
 
     /**  BATTLE FIELD COMPONENT INITIALIZATION **/
@@ -39,12 +39,53 @@ public class Battlefield : MonoBehaviour
         }
     }
 
-    public void AddToGroup(Unit unit)
+    //*** UNIT MANAGEMENT
+
+    public void AddUnit(Unit unit)
     {
-        if(_unitGroup == null)
-            _unitGroup = new UnitGroup(this.groundmap);
-        _unitGroup.Add(unit);
+        if(_units == null)
+            _units = new List<Unit>();
+        _units.Add(unit);
     }
+
+    public List<Unit> Units(bool activeOnly)
+    {
+        List<Unit> activeUnits = new List<Unit>();
+        foreach (Unit u in _units)
+        {
+            if (u.gameObject.activeInHierarchy || !activeOnly)
+            {
+                activeUnits.Add(u);
+            }
+        }
+        return activeUnits;
+    }
+
+    public Unit GetUnitFrom(Vector3Int mapPos)
+    {
+        Unit found = null;
+        Vector3Int unitPos;
+        foreach (Unit u in _units)
+        {
+            if (u.gameObject.activeInHierarchy)
+            {
+                unitPos = groundmap.WorldToCell(u.Transform.position);
+                if (unitPos.Equals(mapPos))
+                {
+                    found = u;
+                    break;
+                }
+            }
+        }
+        return found;
+    }
+
+    public bool IsTileOccupied(Vector3Int mapPos)
+    {
+        return GetUnitFrom(mapPos) == null;
+    }
+
+    //*** TILE MATRIX
 
     public struct TileMatrix
     {

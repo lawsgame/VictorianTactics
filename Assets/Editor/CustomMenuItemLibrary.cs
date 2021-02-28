@@ -38,7 +38,6 @@ public class MenuItemLibrary
         GameObject go = GameObject.FindGameObjectWithTag("Ground");
         Battlefield bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>();
         Tilemap groundTilemap = go.GetComponent<Tilemap>();
-        List<Unit> units = bf.UnitGroup().GetUnits();
 
     }
 
@@ -57,14 +56,6 @@ public class MenuItemLibrary
         ajustedWorldPos.y += 0.25f;
         t.position = ajustedWorldPos;
 
-    }
-
-
-    [MenuItem("CONTEXT/Battlefield/Show UnitGroup")]
-    static void ShowUnitGroup(MenuCommand command)
-    {
-        Battlefield bf = command.context as Battlefield;
-        Debug.Log(bf.UnitGroup().ToString());
     }
 
 }
