@@ -63,7 +63,19 @@ public abstract class InputHandler : MonoBehaviour
             }
             _previousMousePos = Input.mousePosition;
         }
-        
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            try
+            {
+                OnDoubleTap(Input.mousePosition);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
+        }
+
         if (Input.GetMouseButtonDown(2))
         {
             try
@@ -80,6 +92,7 @@ public abstract class InputHandler : MonoBehaviour
 
     public abstract void OnTouch(Vector2 mousePosition);
     public abstract void OnLongTouch(Vector2 mousePosition);
+    public abstract void OnDoubleTap(Vector2 mousePosition);
     public abstract void OnPan(Vector2 mousePosition, Vector2 mousePreviousPos);
 
     

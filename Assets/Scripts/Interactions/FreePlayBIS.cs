@@ -12,7 +12,7 @@ public class FreePlayBIS : BattleInterractionState
     }
 
     public override void Init() => Debug.Log("Init FreePlayBIS");
-    public override void Dispose() =>  Debug.Log("Dispode FreePlayBIS");
+    public override void Dispose() =>  Debug.Log("Dispose FreePlayBIS");
     public override void End() =>  Debug.Log("End FreePlayBIS");
 
     public override void OnPan(Vector2 worldPos, Vector2 mousePos, Vector2 mouseDl, Vector2 worldDl) => Debug.Log("Pan on " + mousePos);
@@ -31,25 +31,28 @@ public class FreePlayBIS : BattleInterractionState
 
         if (worldTile != null)
         {
-            // check if one of the unit has been selected
             Unit touchedUnit = Controller.Battlefield.GetUnitFrom(cellPos);
-            
             if(touchedUnit != null)
             { 
                 _selectedUnit = touchedUnit;
                 Debug.Log("New selected unit: " + touchedUnit.name);
             }
             
-
-            // if an empty tile has been selected, move the selected unit to this tile
             if (touchedUnit == null && _selectedUnit != null && worldTile.Model.Traversable)
             {
-                DisplaceCommand currentCommand = new DisplaceCommand(Controller.Battlefield.Groundmap, _selectedUnit, cellPos);
-                if (currentCommand.IsExecutable())
-                    currentCommand.Apply();
+                DoCommand(new DisplaceCommand(Controller.Battlefield.Groundmap, _selectedUnit, cellPos));
             }
         }
     }
 
-    
+
+    public override void OnDoubleTap(Vector3Int tilePos, Vector2 worldPos, Vector2 mousePos, WorldTile worldTile)
+    {
+        if (UndoLastCommand())
+            Debug.Log("undone");
+        else
+            Debug.Log("undo aborted");
+    }
+
+
 }

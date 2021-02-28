@@ -8,7 +8,7 @@ public abstract class BattleCommand : Command
 
     public bool Done => _done;
 
-    public void execute()
+    public void Execute()
     {
         if (!_done)
         {
@@ -18,7 +18,7 @@ public abstract class BattleCommand : Command
         else Debug.LogWarningFormat("Command ({0}) already done, apply is aborted", this);
     }
 
-    public void undo()
+    public void Undo()
     {
         if (_done)
         {
@@ -30,7 +30,7 @@ public abstract class BattleCommand : Command
 
     public abstract bool IsUndoable();
     public abstract bool IsExecutable();
-    public abstract void Apply();
-    public abstract void Unapply();
+    protected abstract void Apply();
+    protected abstract void Unapply();
 
 }

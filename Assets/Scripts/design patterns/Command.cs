@@ -3,6 +3,6 @@ using System.Collections.Generic;
 
 public interface  Command
 {
-    void execute ();
-    void undo();
+    void Execute ();
+    void Undo();
 }

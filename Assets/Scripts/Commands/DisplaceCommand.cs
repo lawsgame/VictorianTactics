@@ -18,7 +18,7 @@ public class DisplaceCommand : BattleCommand
         _newCellPos = newCellPos;
     }
 
-    public override void Apply()
+    protected override void Apply()
     {
         Vector3 unitNewWorldPos = _groundmap.CellToWorld(_newCellPos);
         unitNewWorldPos.y += 0.25f;
@@ -26,7 +26,7 @@ public class DisplaceCommand : BattleCommand
         Debug.Log(string.Format("{0} unit moved to {1}", _selectedUnit.name, _newCellPos));
     }
 
-    public override void Unapply()
+    protected override void Unapply()
     {
         Vector3 unitOldWorldPos = _groundmap.CellToWorld(_oldCellPos);
         unitOldWorldPos.y += 0.25f;

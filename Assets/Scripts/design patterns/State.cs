@@ -1,4 +1,5 @@
-﻿public interface State 
+﻿
+public interface State 
 {
     void Init();    // to be called whenever the state is activated
     void End();     // to be called whenever the state is disactivated
