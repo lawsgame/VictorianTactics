@@ -26,13 +26,14 @@ public class Unit : MonoBehaviour
     {
         Battlefield battlefieldComponent = battlefield.GetComponent<Battlefield>();
         battlefieldComponent.AddUnit(this);
+
         List<WeaponModel> weapons = new List<WeaponModel>();
-        foreach(WeaponType weaponType in weaponTypes)
-        {
+        foreach (WeaponType weaponType in weaponTypes)
             weapons.Add(WeaponModel.create(weaponType));
-        }
+        
         _groudmap = battlefieldComponent.Groundmap;
         _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp);
+        _transform = gameObject.transform;
     }
 
     public Vector3Int GetMapPos() => _groudmap.WorldToCell(_transform.position);

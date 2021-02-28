@@ -29,6 +29,11 @@ public class BattleController : InputHandler
         _battleInterractionStateMachine.Push(new FreePlayBIS(this));
     }
 
+    protected override void Update()
+    {
+        base.Update();
+    } 
+
     public override void OnTouch(Vector2 mousePos)
     {
         Vector2 worldPos = GameMainCamera.ScreenToWorldPoint(Input.mousePosition);

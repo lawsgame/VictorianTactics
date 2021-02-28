@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract  class InputHandler : MonoBehaviour
+public abstract class InputHandler : MonoBehaviour
 {
 
     [SerializeField] private float _sensivityTime = 0.1f;
@@ -13,7 +14,7 @@ public abstract  class InputHandler : MonoBehaviour
     private Vector2 _previousMousePos;
 
 
-    void Update()
+    protected virtual void Update()
     {
 
         if (_pressed)
@@ -23,32 +24,58 @@ public abstract  class InputHandler : MonoBehaviour
             {
                 _longPressed = true;
                 _previousMousePos = Input.mousePosition;
-            }
-                
+            } 
         }
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             _delay = 0;
             _pressed = true;
+            _longPressed = false;
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             if (_pressed && !_longPressed)
-                OnTouch(Input.mousePosition);
+            {
+                try
+                {
+                    OnTouch(Input.mousePosition);
+                }
+                catch(Exception e)
+                {
+                    Debug.LogException(e, this);
+                }
+            }
             _pressed = false;
             _longPressed = false;
         }
 
         if (_longPressed)
         {
-            OnPan(Input.mousePosition, _previousMousePos);
+            try
+            {
+                OnPan(Input.mousePosition, _previousMousePos);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
             _previousMousePos = Input.mousePosition;
         }
         
         if (Input.GetMouseButtonDown(2))
-            OnLongTouch(Input.mousePosition);
+        {
+            try
+            {
+                OnLongTouch(Input.mousePosition);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
+        }
+           
     }
 
     public abstract void OnTouch(Vector2 mousePosition);
