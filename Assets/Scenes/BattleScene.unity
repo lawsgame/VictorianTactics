@@ -131,8 +131,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4345309}
   - component: {fileID: 4345311}
-  - component: {fileID: 4345310}
   - component: {fileID: 4345312}
+  - component: {fileID: 4345310}
   m_Layer: 0
   m_Name: Solaire
   m_TagString: Untagged
