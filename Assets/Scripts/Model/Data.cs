@@ -6,4 +6,12 @@ public static class Data
 {
     public readonly static int LEVEL_MAX = 20;
     public readonly static int LEVEL_PROMOTION = 10;
+
+    public enum Orientation 
+    { 
+        North,
+        East,
+        South, 
+        West
+    }
 }

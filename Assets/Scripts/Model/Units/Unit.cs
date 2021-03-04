@@ -16,9 +16,11 @@ public class Unit : MonoBehaviour
     private UnitModel _model;
     private Transform _transform;
     private Tilemap _groudmap;
+    private UnitAnimatorScheduler _scheduler;
 
     public UnitModel Model => _model;
     public Transform Transform => _transform;
+    public UnitAnimatorScheduler Scheduler => _scheduler;
 
     // Start is called before the first frame update
 
@@ -34,6 +36,7 @@ public class Unit : MonoBehaviour
         _groudmap = battlefieldComponent.Groundmap;
         _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp);
         _transform = gameObject.transform;
+        _scheduler = GetComponent<UnitAnimatorScheduler>();
     }
 
     public Vector3Int GetMapPos() => _groudmap.WorldToCell(_transform.position);

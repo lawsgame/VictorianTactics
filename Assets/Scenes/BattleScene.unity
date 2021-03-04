@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 4345311}
   - component: {fileID: 4345312}
   - component: {fileID: 4345310}
+  - component: {fileID: 4345313}
   m_Layer: 0
   m_Name: Solaire
   m_TagString: Untagged
@@ -240,6 +241,18 @@ MonoBehaviour:
   randomLevelUp: 1
   type: 0
   weaponTypes: 00000000
+--- !u!114 &4345313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355014484be91b84b943f40b0ce10263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &264449927
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +264,8 @@ GameObject:
   - component: {fileID: 264449929}
   - component: {fileID: 264449928}
   - component: {fileID: 264449930}
+  - component: {fileID: 264449932}
+  - component: {fileID: 264449931}
   m_Layer: 0
   m_Name: PurpleSol
   m_TagString: Unit
@@ -339,6 +354,37 @@ MonoBehaviour:
   randomLevelUp: 0
   type: 0
   weaponTypes: 00000000
+--- !u!95 &264449931
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264449927}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e54d8618bfb7cb4891cca71bb88580c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &264449932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264449927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355014484be91b84b943f40b0ce10263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &347591002
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ public abstract class InputHandler : MonoBehaviour
     private bool _longPressed = false;
     private Vector2 _previousMousePos;
 
-
     protected virtual void Update()
     {
 
@@ -87,13 +86,21 @@ public abstract class InputHandler : MonoBehaviour
                 Debug.LogException(e, this);
             }
         }
-           
+
+        if (Input.GetKeyDown(KeyCode.Space)) OnAllowedKeyDown(KeyCode.Space);
+        if (Input.GetKeyDown(KeyCode.A)) OnAllowedKeyDown(KeyCode.A);
+        if (Input.GetKeyDown(KeyCode.Z)) OnAllowedKeyDown(KeyCode.Z);
+        if (Input.GetKeyDown(KeyCode.E)) OnAllowedKeyDown(KeyCode.E);
+        if (Input.GetKeyDown(KeyCode.Q)) OnAllowedKeyDown(KeyCode.Q);
+        if (Input.GetKeyDown(KeyCode.S)) OnAllowedKeyDown(KeyCode.S);
+        
     }
 
     public abstract void OnTouch(Vector2 mousePosition);
     public abstract void OnLongTouch(Vector2 mousePosition);
     public abstract void OnDoubleTap(Vector2 mousePosition);
     public abstract void OnPan(Vector2 mousePosition, Vector2 mousePreviousPos);
+    public abstract void OnAllowedKeyDown(KeyCode code);
 
     
 }

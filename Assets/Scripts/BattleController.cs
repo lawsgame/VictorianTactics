@@ -68,5 +68,8 @@ public class BattleController : InputHandler
         _battleInterractionStateMachine.GetCurrentState().OnPan(worldPos, mousePos, worldDl, mouseDl) ;
     }
 
-    
+    public override void OnAllowedKeyDown(KeyCode code)
+    {
+        _battleInterractionStateMachine.GetCurrentState().OnKeyDown(code);
+    }
 }

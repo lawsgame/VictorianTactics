@@ -23,6 +23,7 @@ public abstract class BattleInterractionState: State
     public abstract void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePos, WorldTile touchedTile);
     public abstract void OnDoubleTap(Vector3Int tilePos, Vector2 worldPos, Vector2 mousePos, WorldTile worldTile);
     public abstract void OnPan(Vector2 worldPos, Vector2 mousePos, Vector2 mouseDl, Vector2 worldDl);
+    public abstract void OnKeyDown(KeyCode code);
 
     public bool CommandHistoryEmpty() => _commandHistoric.Count == 0;
 

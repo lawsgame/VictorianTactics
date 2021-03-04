@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 
 public class FreePlayBIS : BattleInterractionState
 {
@@ -54,5 +52,18 @@ public class FreePlayBIS : BattleInterractionState
             Debug.Log("undo aborted");
     }
 
+    public override void OnKeyDown(KeyCode code)
+    {
+        Debug.Log("key down: "+code);
+        if(_selectedUnit != null)
+        {
+            switch (code)
+            {
+                case KeyCode.A: _selectedUnit.Scheduler.Play(UnitAnimatorScheduler.AnimationKey.Attack, Data.Orientation.East); break;
+                case KeyCode.Z: _selectedUnit.Scheduler.Play(UnitAnimatorScheduler.AnimationKey.LevelUp, Data.Orientation.South); break;
+                case KeyCode.E: _selectedUnit.Scheduler.Play(UnitAnimatorScheduler.AnimationKey.Idle, Data.Orientation.West); break;
+            }
 
+        }
+    }
 }
