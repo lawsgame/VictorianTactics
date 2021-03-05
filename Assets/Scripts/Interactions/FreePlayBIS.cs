@@ -59,9 +59,10 @@ public class FreePlayBIS : BattleInterractionState
         {
             switch (code)
             {
-                case KeyCode.A: _selectedUnit.Scheduler.Play(UnitAnimatorScheduler.AnimationKey.Attack, Data.Orientation.East); break;
-                case KeyCode.Z: _selectedUnit.Scheduler.Play(UnitAnimatorScheduler.AnimationKey.LevelUp, Data.Orientation.South); break;
-                case KeyCode.E: _selectedUnit.Scheduler.Play(UnitAnimatorScheduler.AnimationKey.Idle, Data.Orientation.West); break;
+                case KeyCode.A: _selectedUnit.Scheduler.Play(UnitAnimation.Key.Attack, Data.Orientation.East); break;
+                case KeyCode.Z: _selectedUnit.Scheduler.Play(UnitAnimation.Key.LevelUp, Data.Orientation.South); break;
+                case KeyCode.E: _selectedUnit.Scheduler.Play(UnitAnimation.Key.Idle, Data.Orientation.West); break;
+                case KeyCode.Q: _selectedUnit.Scheduler.Play(UnitAnimation.Key.Die, Data.Orientation.North); break;
             }
 
         }

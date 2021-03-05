@@ -4,23 +4,26 @@ using UnityEngine;
 using static UnitTemplate;
 using static WeaponTemplate;
 using UnityEngine.Tilemaps;
+using static Data;
 
 public class Unit : MonoBehaviour
 {
     [SerializeField] private GameObject battlefield;
     [SerializeField] private int startingLevel;
     [SerializeField] private bool randomLevelUp;
+    [SerializeField] private Orientation initialOrientation;
     [SerializeField] private UnitType type;
     [SerializeField] private List<WeaponType> weaponTypes;
     
     private UnitModel _model;
     private Transform _transform;
     private Tilemap _groudmap;
-    private UnitAnimatorScheduler _scheduler;
+    private UnitAnimatorManager _scheduler;
 
     public UnitModel Model => _model;
     public Transform Transform => _transform;
-    public UnitAnimatorScheduler Scheduler => _scheduler;
+    public UnitAnimatorManager Scheduler => _scheduler;
+    public Orientation InitialOrientation => initialOrientation;
 
     // Start is called before the first frame update
 
@@ -36,7 +39,7 @@ public class Unit : MonoBehaviour
         _groudmap = battlefieldComponent.Groundmap;
         _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp);
         _transform = gameObject.transform;
-        _scheduler = GetComponent<UnitAnimatorScheduler>();
+        _scheduler = GetComponent<UnitAnimatorManager>();
     }
 
     public Vector3Int GetMapPos() => _groudmap.WorldToCell(_transform.position);

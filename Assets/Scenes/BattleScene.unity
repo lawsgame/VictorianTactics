@@ -239,6 +239,7 @@ MonoBehaviour:
   battlefield: {fileID: 982281584}
   startingLevel: 5
   randomLevelUp: 1
+  initialOrientation: 2
   type: 0
   weaponTypes: 00000000
 --- !u!114 &4345313
@@ -272,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &264449928
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   battlefield: {fileID: 982281584}
   startingLevel: 10
   randomLevelUp: 0
+  initialOrientation: 0
   type: 0
   weaponTypes: 00000000
 --- !u!95 &264449931

@@ -9,9 +9,10 @@ public static class Data
 
     public enum Orientation 
     { 
-        North,
-        East,
+        
         South, 
-        West
+        West,
+        North,
+        East
     }
 }
