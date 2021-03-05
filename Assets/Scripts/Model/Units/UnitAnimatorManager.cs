@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using static Data;
 
 [System.Serializable]
@@ -7,12 +8,10 @@ public class UnitAnimatorManager : MonoBehaviour
     private Unit _unit;
     private Animator _animator;
     private SpriteRenderer _renderer;
-    private UnitAnimation _currentAnimation;
-    private Orientation _currentOrientation;
-
     private bool initiated = false;
-    private UnitAnimation.Key _nextKey;
-    private Orientation _nextOrientation;
+    private (UnitAnimation state, Orientation orientation) _current;
+    private Queue<(UnitAnimation.Key key, Orientation orientation)>  _animQueue;
+    private Queue<Orientation> _nextOrientations;
 
     public Animator Animator => _animator;
 
@@ -22,10 +21,8 @@ public class UnitAnimatorManager : MonoBehaviour
         _unit = GetComponent<Unit>();
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
-        _currentAnimation = UnitAnimation.Find(UnitAnimation.Key.Idle);
-        _currentOrientation = _unit.InitialOrientation;
-        _nextKey = UnitAnimation.Key.Idle;
-        _nextOrientation = _unit.InitialOrientation;
+        _current = (UnitAnimation.Find(UnitAnimation.Key.Idle), _unit.InitialOrientation);
+        _animQueue = new Queue<(UnitAnimation.Key key, Orientation orientation)>();
     }
 
     void LateUpdate()
@@ -33,56 +30,69 @@ public class UnitAnimatorManager : MonoBehaviour
         if (!initiated)
         {
             initiated = true;
-            Launch();
+            PlayNext(_current.state.KeyName, _current.orientation);
         }
-        else if (HasChanged())
+        else if (IsResting())
         {
-            Launch();
+            if(HasNext())
+                PlayNext();
         }
-        else if (!IsResting())
-        {
-            if (IsCurrentAnimationFinished())
+        else if (IsCurrentAnimationFinished())
+        { 
+            if (!HasNext())
             {
-                Play(UnitAnimation.Key.Idle, _currentOrientation);
-                Launch();
+                QueueNext(UnitAnimation.Key.Idle, _current.orientation);
             }
+            PlayNext();
+            
         }
         
     }
 
 
-    public void Play(UnitAnimation.Key key, Data.Orientation orientation)
+    public void QueueNext(UnitAnimation.Key key, Data.Orientation orientation)
     {
-        _nextKey = key;
-        _nextOrientation = orientation;
+        _animQueue.Enqueue((key, orientation));
     }
 
 
-    private void Launch()
+    private void PlayNext()
     {
-        _currentAnimation = UnitAnimation.Find(_nextKey);
-        _currentOrientation = _nextOrientation;
+        if(_animQueue.Count > 0)
+        {
+            (UnitAnimation.Key key, Orientation or) next = _animQueue.Dequeue();
+            PlayNext(next.key, next.or);
+            
+        }
+        
+    }
 
-        _renderer.flipX = _currentOrientation.Equals(Orientation.West) || _currentOrientation.Equals(Orientation.North);
+    private void PlayNext(UnitAnimation.Key nextKey, Data.Orientation nextOrientation)
+    {
+        UnitAnimation nextAnimation = UnitAnimation.Find(nextKey);
+        _current = (nextAnimation, nextOrientation);
+        _renderer.flipX = nextOrientation.Equals(Orientation.West) || nextOrientation.Equals(Orientation.North);
 
-        Orientation spriteOrientation = _currentOrientation;
-        if (_currentOrientation.Equals(Orientation.West))
+        Orientation spriteOrientation = nextOrientation;
+        if (nextOrientation.Equals(Orientation.West))
             spriteOrientation = Orientation.South;
-        if (_currentOrientation.Equals(Orientation.North))
+        if (nextOrientation.Equals(Orientation.North))
             spriteOrientation = Orientation.East;
 
-        _animator.Play(string.Format("{0}{1}", _nextKey.ToString(), spriteOrientation.ToString()));
+        string animationStateName = string.Format("{0}{1}", nextKey.ToString(), spriteOrientation.ToString());
+        Debug.Log("play next: " + animationStateName);
+        _animator.Play(animationStateName);
     }
 
 
-    public bool IsResting() => _currentAnimation.RestingAnimation;
+    public bool IsResting() => _current.state.RestingAnimation;
 
 
-    private bool HasChanged() => _currentAnimation == null || !_currentAnimation.KeyName.Equals(_nextKey) || !_currentOrientation.Equals(_nextOrientation);
+    private bool HasNext() => _animQueue != null && _animQueue.Count > 0;
 
 
     private bool IsCurrentAnimationFinished()
     {
-        return _currentAnimation.TransitionAfterPlayedOnce && _animator.GetCurrentAnimatorStateInfo(0).length < _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        return _current.state.TransitionAfterPlayedOnce && _animator.GetCurrentAnimatorStateInfo(0).length < _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 }

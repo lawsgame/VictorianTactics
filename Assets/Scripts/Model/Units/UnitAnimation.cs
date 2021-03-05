@@ -13,6 +13,7 @@ public class UnitAnimation
         Pushed,
         SM1,
         Die,
+        Dead,
         LevelUp,
         Walk,
         Wound
@@ -33,7 +34,8 @@ public class UnitAnimation
         animationMap.Add(Key.Push, new UnitAnimation(Key.Push       , true, false));
         animationMap.Add(Key.Pushed, new UnitAnimation(Key.Pushed   , true, false));
         animationMap.Add(Key.SM1, new UnitAnimation(Key.SM1         , true, false));
-        animationMap.Add(Key.Die, new UnitAnimation(Key.Die         , false, true));
+        animationMap.Add(Key.Die, new UnitAnimation(Key.Die         , true, false));
+        animationMap.Add(Key.Dead, new UnitAnimation(Key.Dead       , false, true));
         animationMap.Add(Key.LevelUp, new UnitAnimation(Key.LevelUp , true, false));
         animationMap.Add(Key.Walk, new UnitAnimation(Key.Walk       , false, false));
         animationMap.Add(Key.Wound, new UnitAnimation(Key.Wound     , true, false));

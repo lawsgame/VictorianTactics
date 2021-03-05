@@ -93,6 +93,7 @@ public abstract class InputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) OnAllowedKeyDown(KeyCode.E);
         if (Input.GetKeyDown(KeyCode.Q)) OnAllowedKeyDown(KeyCode.Q);
         if (Input.GetKeyDown(KeyCode.S)) OnAllowedKeyDown(KeyCode.S);
+        if (Input.GetKeyDown(KeyCode.D)) OnAllowedKeyDown(KeyCode.D);
         
     }
 

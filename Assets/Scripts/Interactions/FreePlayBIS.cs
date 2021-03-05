@@ -54,15 +54,23 @@ public class FreePlayBIS : BattleInterractionState
 
     public override void OnKeyDown(KeyCode code)
     {
-        Debug.Log("key down: "+code);
         if(_selectedUnit != null)
         {
             switch (code)
             {
-                case KeyCode.A: _selectedUnit.Scheduler.Play(UnitAnimation.Key.Attack, Data.Orientation.East); break;
-                case KeyCode.Z: _selectedUnit.Scheduler.Play(UnitAnimation.Key.LevelUp, Data.Orientation.South); break;
-                case KeyCode.E: _selectedUnit.Scheduler.Play(UnitAnimation.Key.Idle, Data.Orientation.West); break;
-                case KeyCode.Q: _selectedUnit.Scheduler.Play(UnitAnimation.Key.Die, Data.Orientation.North); break;
+                case KeyCode.A: _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Attack, Data.Orientation.East); break;
+                case KeyCode.Z: _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.LevelUp, Data.Orientation.South); break;
+                case KeyCode.E: _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Idle, Data.Orientation.West); break;
+                case KeyCode.Q: _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Wound, Data.Orientation.North); break;
+                case KeyCode.S: 
+                    _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Wound, Data.Orientation.North); 
+                    _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Die, Data.Orientation.North); 
+                    break;
+                case KeyCode.D: 
+                    _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Wound, Data.Orientation.North);
+                    _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Die, Data.Orientation.North);
+                    _selectedUnit.Scheduler.QueueNext(UnitAnimation.Key.Dead, Data.Orientation.North);
+                    break;
             }
 
         }
