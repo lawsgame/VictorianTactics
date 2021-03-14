@@ -8,13 +8,14 @@ using static Data;
 
 public class Unit : MonoBehaviour
 {
+    // initialization parameters
     [SerializeField] private GameObject battlefield;
     [SerializeField] private int startingLevel;
     [SerializeField] private bool randomLevelUp;
     [SerializeField] private Orientation initialOrientation;
     [SerializeField] private UnitType type;
     [SerializeField] private List<WeaponType> weaponTypes;
-    
+
     private UnitModel _model;
     private Transform _transform;
     private Tilemap _groudmap;
@@ -37,7 +38,7 @@ public class Unit : MonoBehaviour
             weapons.Add(WeaponModel.create(weaponType));
         
         _groudmap = battlefieldComponent.Groundmap;
-        _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp);
+        _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp, initialOrientation);
         _transform = gameObject.transform;
         _scheduler = GetComponent<UnitAnimatorManager>();
     }

@@ -9,9 +9,8 @@ public class UnitAnimatorManager : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _renderer;
     private bool initiated = false;
-    private (UnitAnimation state, Orientation orientation) _current;
+    private UnitAnimation _currentAnimation;
     private Queue<(UnitAnimation.Key key, Orientation orientation)>  _animQueue;
-    private Queue<Orientation> _nextOrientations;
 
     public Animator Animator => _animator;
 
@@ -21,7 +20,7 @@ public class UnitAnimatorManager : MonoBehaviour
         _unit = GetComponent<Unit>();
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
-        _current = (UnitAnimation.Find(UnitAnimation.Key.Idle), _unit.InitialOrientation);
+        _currentAnimation = UnitAnimation.Find(UnitAnimation.Key.Idle);
         _animQueue = new Queue<(UnitAnimation.Key key, Orientation orientation)>();
     }
 
@@ -30,7 +29,7 @@ public class UnitAnimatorManager : MonoBehaviour
         if (!initiated)
         {
             initiated = true;
-            PlayNext(_current.state.KeyName, _current.orientation);
+            PlayNext(_currentAnimation.KeyName, _unit.Model.currentOrientation);
         }
         else if (IsResting())
         {
@@ -41,7 +40,7 @@ public class UnitAnimatorManager : MonoBehaviour
         { 
             if (!HasNext())
             {
-                QueueNext(UnitAnimation.Key.Idle, _current.orientation);
+                QueueNext(UnitAnimation.Key.Idle, _unit.Model.currentOrientation);
             }
             PlayNext();
             
@@ -70,7 +69,8 @@ public class UnitAnimatorManager : MonoBehaviour
     private void PlayNext(UnitAnimation.Key nextKey, Data.Orientation nextOrientation)
     {
         UnitAnimation nextAnimation = UnitAnimation.Find(nextKey);
-        _current = (nextAnimation, nextOrientation);
+        _currentAnimation = nextAnimation;
+        _unit.Model.currentOrientation = nextOrientation;
         _renderer.flipX = nextOrientation.Equals(Orientation.West) || nextOrientation.Equals(Orientation.North);
 
         Orientation spriteOrientation = nextOrientation;
@@ -85,7 +85,7 @@ public class UnitAnimatorManager : MonoBehaviour
     }
 
 
-    public bool IsResting() => _current.state.RestingAnimation;
+    public bool IsResting() => _currentAnimation.RestingAnimation;
 
 
     private bool HasNext() => _animQueue != null && _animQueue.Count > 0;
@@ -93,6 +93,7 @@ public class UnitAnimatorManager : MonoBehaviour
 
     private bool IsCurrentAnimationFinished()
     {
-        return _current.state.TransitionAfterPlayedOnce && _animator.GetCurrentAnimatorStateInfo(0).length < _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        return _currentAnimation.TransitionAfterPlayedOnce 
+            && _animator.GetCurrentAnimatorStateInfo(0).length < _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 }

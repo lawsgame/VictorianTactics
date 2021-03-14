@@ -3,10 +3,17 @@ using System.Linq;
 using System.Collections.Generic;
 using static UnitTemplate;
 using UnityEngine;
+using static Data;
 
 [System.Serializable]
 public class UnitModel
 {
+    // battle attributes
+    public bool acted = false;
+    public bool moved = false;
+    public Orientation currentOrientation;
+
+    // general attributes
     private int _level;
     private UnitTemplate _template;
     private List<WeaponModel> _carriedWeapons;
@@ -49,9 +56,10 @@ public class UnitModel
 
     private UnitModel() { }
 
-    public static UnitModel create(int startLevel, UnitType type, List<WeaponModel> carriedWeapons, bool randomLevelUp)
+    public static UnitModel create(int startLevel, UnitType type, List<WeaponModel> carriedWeapons, bool randomLevelUp, Orientation initialOrientation)
     {
         UnitModel unit = new UnitModel();
+        unit.currentOrientation = initialOrientation;
         unit._level = 1;
         unit._template = UnitTemplate.Find(type);
         unit._carriedWeapons = carriedWeapons;
