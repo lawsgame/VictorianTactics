@@ -58,4 +58,15 @@ public class MenuItemLibrary
 
     }
 
+    [MenuItem("CONTEXT/Transform/Resynchronize Orientation")]
+    static void SyncOrientation(MenuCommand command)
+    {
+
+        Transform t = command.context as Transform;
+        Unit u = t.gameObject.GetComponent<Unit>();
+        if(u != null)
+            u.Scheduler.QueueNext(UnitAnimation.Key.Idle,u.Model.orientation);
+        
+    }
+
 }

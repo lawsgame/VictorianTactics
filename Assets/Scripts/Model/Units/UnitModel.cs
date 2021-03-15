@@ -11,7 +11,7 @@ public class UnitModel
     // battle attributes
     public bool acted = false;
     public bool moved = false;
-    public Orientation currentOrientation;
+    public Orientation orientation;
 
     // general attributes
     private int _level;
@@ -59,7 +59,7 @@ public class UnitModel
     public static UnitModel create(int startLevel, UnitType type, List<WeaponModel> carriedWeapons, bool randomLevelUp, Orientation initialOrientation)
     {
         UnitModel unit = new UnitModel();
-        unit.currentOrientation = initialOrientation;
+        unit.orientation = initialOrientation;
         unit._level = 1;
         unit._template = UnitTemplate.Find(type);
         unit._carriedWeapons = carriedWeapons;
