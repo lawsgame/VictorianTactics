@@ -37,7 +37,9 @@ public class UnitModel
     public int Endurance() => _endurance;
     public int Bravery() => _bravery;
     public int Mobility(UnitRank rank) => _template.BaseMobility(rank);
+    public int Mobility() => Mobility(Rank());
     public int Resistance(UnitRank rank) => _template.BaseResistance(rank);
+    public int Resistance() => Resistance(Rank());
 
     public int Armor(DamageType type, UnitRank rank)
     {

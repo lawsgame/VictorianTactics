@@ -29,6 +29,9 @@ public class FreePlayBIS : BattleInterractionState
 
         if (worldTile != null)
         {
+            TraversableAreaFinder.Algorithm.GetTravesableArea(Controller.Battlefield, cellPos, 1);
+
+
             Unit touchedUnit = Controller.Battlefield.GetUnitFrom(cellPos);
             if(touchedUnit != null)
             { 

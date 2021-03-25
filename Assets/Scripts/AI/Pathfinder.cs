@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static TMath;
 
 namespace Tactics.Pathfinder
 {
@@ -186,16 +186,14 @@ namespace Tactics.Pathfinder
                         openList.Add(newOpenNode);
                     }
                 }
-
-                
-
             }
-
             return chosenNode.GetPath();
         }
 
-        public static int Dist(Vector3Int gridPos1, Vector3Int gridPos2) => Math.Abs(gridPos1.x - gridPos2.x) + Math.Abs(gridPos1.y - gridPos2.y);
 
+        public static List<Node> GetShortestPath(Battlefield battlefield, Unit actor, Vector3Int targetPos)
+        {
+            return GetShortestPath(battlefield.Groundmap, actor.GetMapPos(), targetPos);
+        }
     }
-
 }

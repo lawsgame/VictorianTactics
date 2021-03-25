@@ -61,23 +61,34 @@ public class WorldTileTemplate
         return tileTemplate[WorldTileType.Undefined];
     }
 
-    public WorldTileType Name { get; }
-    public int MovementCost { get;} 
-    public bool Traversable { get; } 
-    public int HealAttrition { get; } 
-    public int RangeBonus { get;  } 
-    public int AccuracyBonus { get;  } 
-    public int AvoidanceBonus { get;} 
-    public int DefenseBonus { get; } 
+    private WorldTileType _name;
+    private int _movementCost;
+    private bool _traversable;
+    private int _healAttrition;
+    private int _rangeBonus;
+    private int _accuracyBonus;
+    private int _avoidanceBonus;
+    private int _defenseBonus;
+
+    public WorldTileType Name => _name;
+    public int MovementCost() => _movementCost;
+    public bool Traversable => _traversable;
+    public int HealAttrition => _healAttrition;
+    public int RangeBonus => _rangeBonus;
+    public int AccuracyBonus => _accuracyBonus;
+    public int AvoidanceBonus => _avoidanceBonus;
+    public int DefenseBonus => _defenseBonus;
+    
+    public int MovementCost(UnitModel unit) => MovementCost();  
 
     protected WorldTileTemplate(WorldTileType name, int movementCost, bool traversable, int healAttrition, int rangeBonus, int accuracyBonus, int defenseBonus)
     {
-        Name = name;
-        MovementCost = movementCost;
-        Traversable = traversable;
-        HealAttrition = healAttrition;
-        RangeBonus = rangeBonus;
-        AccuracyBonus = accuracyBonus;
-        DefenseBonus = defenseBonus;
+        this._name = name;
+        this._movementCost = movementCost;
+        this._traversable = traversable;
+        this._healAttrition = healAttrition;
+        this._rangeBonus = rangeBonus;
+        this._accuracyBonus = accuracyBonus;
+        this._defenseBonus = defenseBonus;
     }
 }
