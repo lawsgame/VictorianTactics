@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 [CustomEditor(typeof(Unit))]
 public class UnitEditor : Editor
 {
-
     //private static readonly string label_CenterUnitsOnClosestCell = "Center Unit on Closest Cell";
     //private static readonly string label_ResyncOrientation = "Resynchronize orientation";
 

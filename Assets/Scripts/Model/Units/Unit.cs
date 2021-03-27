@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     // initialization parameters
     [SerializeField] private GameObject battlefield;
     [SerializeField] private int startingLevel;
+    [SerializeField] private int party;
     [SerializeField] private bool randomLevelUp;
     [SerializeField] private Orientation initialOrientation;
     [SerializeField] private UnitType type;
@@ -38,7 +39,7 @@ public class Unit : MonoBehaviour
             weapons.Add(WeaponModel.create(weaponType));
         
         _groudmap = battlefieldComponent.Groundmap;
-        _model = UnitModel.create(startingLevel, type, weapons, randomLevelUp, initialOrientation);
+        _model = UnitModel.create(startingLevel, party, type, weapons, randomLevelUp, initialOrientation);
         _transform = gameObject.transform;
         _scheduler = GetComponent<UnitAnimatorManager>();
     }
