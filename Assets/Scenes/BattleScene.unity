@@ -1239,6 +1239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfffff7229c854043adad00e4b64dfd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilePosIndicator: {fileID: 2012613599494433488, guid: 41b6e8ac2da790345915d88d7c04121d,
+    type: 3}
   groundmap: {fileID: 965896649}
 --- !u!1 &1891216137
 GameObject:

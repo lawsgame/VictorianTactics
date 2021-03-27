@@ -79,7 +79,7 @@ public class UnitAnimatorManager : MonoBehaviour
             spriteOrientation = Orientation.East;
 
         string animationStateName = string.Format("{0}{1}", nextKey.ToString(), spriteOrientation.ToString());
-        Debug.Log("play next: " + animationStateName);
+        //Debug.Log("play next: " + animationStateName);
         _animator.Play(animationStateName);
     }
 

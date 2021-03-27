@@ -40,33 +40,4 @@ public class MenuItemLibrary
         Tilemap groundTilemap = go.GetComponent<Tilemap>();
 
     }
-
-
-    //*** GAME TOOLS 
-
-    [MenuItem("CONTEXT/Transform/Center On Closest Cell")]
-    static void CenterOnCell(MenuCommand command)
-    {
-
-        Transform t = command.context as Transform;
-        GameObject ground = GameObject.FindGameObjectWithTag("Ground");
-        Tilemap groundTilemap = ground.GetComponent<Tilemap>();
-        Vector3Int cellPos = groundTilemap.WorldToCell(t.position);
-        Vector3 ajustedWorldPos = groundTilemap.CellToWorld(cellPos);
-        ajustedWorldPos.y += 0.25f;
-        t.position = ajustedWorldPos;
-
-    }
-
-    [MenuItem("CONTEXT/Transform/Resynchronize Orientation")]
-    static void SyncOrientation(MenuCommand command)
-    {
-
-        Transform t = command.context as Transform;
-        Unit u = t.gameObject.GetComponent<Unit>();
-        if(u != null)
-            u.Scheduler.QueueNext(UnitAnimation.Key.Idle,u.Model.orientation);
-        
-    }
-
 }

@@ -7,8 +7,10 @@ using static WorldTileTemplate;
 [System.Serializable]
 public class Battlefield : MonoBehaviour
 {
-    [SerializeField] private Tilemap groundmap;
+    public GameObject tilePosIndicator;
 
+    [SerializeField] private Tilemap groundmap;
+    
     private List<Unit> _units = null;
 
     public Tilemap Groundmap => groundmap;
