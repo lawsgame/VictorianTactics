@@ -39,7 +39,7 @@ public class WorldTileTemplate
         tileTemplate.Add(WorldTileType.Desert, new WorldTileTemplate(WorldTileType.Desert, 1, true, 0, 0, 0, 0));
         tileTemplate.Add(WorldTileType.Hill, new WorldTileTemplate(WorldTileType.Hill, 1, true, 0, 0, 0, 0));
         tileTemplate.Add(WorldTileType.Mountain, new WorldTileTemplate(WorldTileType.Mountain, 1, false, 0, 0, 0, 0));
-        tileTemplate.Add(WorldTileType.Woods, new WorldTileTemplate(WorldTileType.Woods, 1, true, 0, 0, 0, 0));
+        tileTemplate.Add(WorldTileType.Woods, new WorldTileTemplate(WorldTileType.Woods, 2, true, 0, 0, 0, 0));
         tileTemplate.Add(WorldTileType.DarkForest, new WorldTileTemplate(WorldTileType.DarkForest, 1, true, 0, 0, 0, 0));
         tileTemplate.Add(WorldTileType.Fields, new WorldTileTemplate(WorldTileType.Fields, 1, true, 0, 0, 0, 0));
         tileTemplate.Add(WorldTileType.LowLand, new WorldTileTemplate(WorldTileType.LowLand, 1, true, 0, 0, 0, 0));
