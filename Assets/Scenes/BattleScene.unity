@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
   startingLevel: 5
+  party: 0
   randomLevelUp: 1
   initialOrientation: 2
   type: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
   startingLevel: 10
+  party: 1
   randomLevelUp: 0
   initialOrientation: 0
   type: 0

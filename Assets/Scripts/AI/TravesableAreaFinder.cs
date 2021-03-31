@@ -80,9 +80,10 @@ namespace TraversableAreaFinder
 
         private static void ExpandArea(Battlefield battlefield, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax)
         {
+            //Debug.Log("node candidate: " + currentNode);
+
             // check if current node is meant to be added to the selected one
             Node currentNode = new Node(currentPos, previousNode.Cost + 1);
-            Debug.Log("node candidate: " + currentNode);
             if (currentNode.Cost > rangeMax)
                 return;
 
@@ -97,14 +98,16 @@ namespace TraversableAreaFinder
             if (selectedTiles.ContainsKey(currentNode.Pos))
             {
                 Node oldNode = selectedTiles[currentNode.Pos];
-                if (oldNode.Cost < currentNode.Cost)
+                if (oldNode.Cost <= currentNode.Cost)
                     return;
+                else
+                    selectedTiles.Remove(currentNode.Pos);
             }
 
             // current node is a selected one
             selectedTiles.Add(currentNode.Pos, currentNode);
-
-            Debug.Log("node candidate: " + currentPos);
+            
+            Debug.Log("node chosen " + currentPos+ " for "+currentNode.Cost);
 
             ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(1,0,0), rangeMax);
             ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(-1,0,0), rangeMax);

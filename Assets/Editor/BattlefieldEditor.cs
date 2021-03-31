@@ -48,6 +48,7 @@ public class BattlefieldEditor : Editor
                     tileWorldPosition = battlefield.Groundmap.CellToWorld(wrapper.position);
                     tilePosIndicator = Instantiate(battlefield.tilePosIndicator, tileWorldPosition, Quaternion.identity);
                     tilePosIndicator.transform.SetParent(textHolder.gameObject.transform);
+                    tilePosIndicator.transform.position += new Vector3(0f, 0.25f, 0f); 
                     TextMeshPro mesh = tilePosIndicator.GetComponent<TextMeshPro>();
                     if (mesh != null)
                     {

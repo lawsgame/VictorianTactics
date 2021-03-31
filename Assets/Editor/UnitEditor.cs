@@ -37,12 +37,14 @@ public class UnitEditor : Editor
         }
     }
 
+    
     private void ResyncOrientation(Unit unit)
     {
         //GUILayout.Label(label_ResyncOrientation);
         if (GUILayout.Button(button_ResyncOrientation))
         {
-            unit.Scheduler.QueueNext(UnitAnimation.Key.Idle, unit.Model.orientation);
+            if(unit.Scheduler != null && unit.Model != null)
+                unit.Scheduler.QueueNext(UnitAnimation.Key.Idle, unit.Model.orientation);
         }
     }
 
