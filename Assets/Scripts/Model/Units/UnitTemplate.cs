@@ -1,51 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static WeaponTemplate;
+using static Data;
 
-[System.Serializable]
-public class UnitTemplate
+[CreateAssetMenu(fileName ="New Unit Template", menuName = "Unit")]
+public class UnitTemplate : ScriptableObject
 {
 
-    public enum UnitType {
-        SolarKnight
-    }
-    
-    public enum UnitRank
-    {
-        Recruit = 0,
-        Veteran = 1
-    }
+    [SerializeField] private string _name;
+    [SerializeField] private WeaponClass[] _weaponMastered;
 
-    private static readonly Dictionary<UnitType, UnitTemplate> unitTemplates = new Dictionary<UnitType, UnitTemplate>();
+    [SerializeField] private int _baseHitPoints;
+    [SerializeField] private int _baseStrenght;
+    [SerializeField] private int _baseDexterity;
+    [SerializeField] private int _baseAgility;
+    [SerializeField] private int _baseEndurance;
+    [SerializeField] private int _baseBravery;
 
-    public static UnitTemplate Find(UnitType name) => (unitTemplates.ContainsKey(name)) ? unitTemplates[name] : unitTemplates[UnitType.SolarKnight];
+    [SerializeField] private float _baseGrowthHitPoints;
+    [SerializeField] private float _baseGrowthStrength;
+    [SerializeField] private float _baseGrowthDexterity;
+    [SerializeField] private float _baseGrowthAgility;
+    [SerializeField] private float _baseGrowthEndurance;
+    [SerializeField] private float _baseGrowthBravery;
 
-    private UnitType _type;
-    private WeaponClass _weaponMastered;
+    [SerializeField] private int[] _mobility;
+    [SerializeField] private int[] _armorBlunt;
+    [SerializeField] private int[] _armorPiercing;
+    [SerializeField] private int[] _armorSlash;
+    [SerializeField] private int[] _resistance;
 
-    private int _baseHitPoints;
-    private int _baseStrenght;
-    private int _baseDexterity;
-    private int _baseAgility;
-    private int _baseEndurance;
-    private int _baseBravery;
-
-    private float _baseGrowthHitPoints;
-    private float _baseGrowthStrength;
-    private float _baseGrowthDexterity;
-    private float _baseGrowthAgility;
-    private float _baseGrowthEndurance;
-    private float _baseGrowthBravery;
-
-    private int[] _mobility;
-    private int[] _armorBlunt;
-    private int[] _armorPiercing;
-    private int[] _armorSlash;
-    private int[] _resistance;
-
-    public UnitType Type() => _type;
-    public WeaponClass MasteredWeapon() => _weaponMastered;
+    public string Name() => _name;
+    public WeaponClass[] MasteredWeapon() => _weaponMastered;
 
     public int BaseHitPoints() => _baseHitPoints;
     public int BaseStrength() => _baseStrenght;
@@ -66,30 +52,14 @@ public class UnitTemplate
     public int BaseArmorPiercing(UnitRank rank) => _armorPiercing[(int)rank];
     public int BaseArmorSlash(UnitRank rank) => _armorSlash[(int)rank];
     public int BaseResistance(UnitRank rank) => _resistance[(int)rank];
-    
-    static UnitTemplate()
+
+    public override bool Equals(object obj)
     {
-        UnitTemplate solarKnight = new UnitTemplate();
-        solarKnight._type = UnitType.SolarKnight;
-        solarKnight._weaponMastered = WeaponClass.Sword;
-        solarKnight._baseHitPoints = 10;
-        solarKnight._baseStrenght = 3;
-        solarKnight._baseDexterity = 3;
-        solarKnight._baseEndurance = 3;
-        solarKnight._baseAgility = 3;
-        solarKnight._baseBravery = 5;
-        solarKnight._baseGrowthHitPoints = 0.5f;
-        solarKnight._baseGrowthStrength = 0.4f;
-        solarKnight._baseGrowthDexterity = 0.2f;
-        solarKnight._baseGrowthAgility = 0.2f;
-        solarKnight._baseGrowthEndurance = 0.2f;
-        solarKnight._baseGrowthBravery = 0.2f;
-        solarKnight._mobility = new int[2]{ 4,5};
-        solarKnight._armorBlunt = new int[2] { 1,2};
-        solarKnight._armorPiercing = new int[2] { 0,1};
-        solarKnight._armorSlash = new int[2] { 2, 3};
-        solarKnight._resistance = new int[2] { 0,1}; 
-        unitTemplates.Add(UnitType.SolarKnight, solarKnight);
+        return obj is UnitTemplate template && template._name.Equals(_name);
     }
 
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
 }

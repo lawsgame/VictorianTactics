@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b38636e4a3d17a45a0dc267292a3e97, type: 3}
+  m_Name: SolarKnight
+  m_EditorClassIdentifier: 
+  _name: SolarKnight
+  _weaponMastered: 00000000
+  _baseHitPoints: 15
+  _baseStrenght: 3
+  _baseDexterity: 3
+  _baseAgility: 3
+  _baseEndurance: 3
+  _baseBravery: 3
+  _baseGrowthHitPoints: 0.2
+  _baseGrowthStrength: 0.2
+  _baseGrowthDexterity: 0.2
+  _baseGrowthAgility: 0.2
+  _baseGrowthEndurance: 0.2
+  _baseGrowthBravery: 0.2
+  _mobility: 0400000005000000
+  _armorBlunt: 0300000005000000
+  _armorPiercing: 0100000002000000
+  _armorSlash: 0100000003000000
+  _resistance: 0000000000000000

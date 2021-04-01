@@ -15,4 +15,20 @@ public static class Data
         North,
         East
     }
+
+    public enum WeaponClass
+    {
+        Sword,
+        Spear,
+        Mace,
+        Axe,
+        Bow,
+        Firearm,
+        TechArm
+    }
+
+    public enum WeaponSubClass
+    {
+        Standard
+    }
 }

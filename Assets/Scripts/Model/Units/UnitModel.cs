@@ -29,7 +29,7 @@ public class UnitModel
     public int Party() => _party;
     public UnitTemplate Template() => _template;
     public UnitRank Rank() => (_level < Data.LEVEL_PROMOTION) ? UnitRank.Recruit: UnitRank.Veteran;
-    public WeaponClass MasteredWeapon() => _template.MasteredWeapon();
+    public WeaponClass[] MasteredWeapon() => _template.MasteredWeapon();
     public List<WeaponModel> CarriedWeapon() => _carriedWeapons;
 
     public int HitPoints() => _hitPoints;
@@ -60,13 +60,13 @@ public class UnitModel
 
     private UnitModel() { }
 
-    public static UnitModel create(int startLevel, int party, UnitType type, List<WeaponModel> carriedWeapons, bool randomLevelUp, Orientation initialOrientation)
+    public static UnitModel create(int startLevel, int party, UnitTemplate template, List<WeaponModel> carriedWeapons, bool randomLevelUp, Orientation initialOrientation)
     {
         UnitModel unit = new UnitModel();
         unit.orientation = initialOrientation;
         unit._level = 1;
         unit._party = party;
-        unit._template = UnitTemplate.Find(type);
+        unit._template = template;
         unit._carriedWeapons = carriedWeapons;
         unit._agility = unit._template.BaseAgility();
         unit._bravery = unit._template.BaseBravery();
@@ -119,7 +119,7 @@ public class UnitModel
 
     public override string ToString()
     {
-        return string.Format("Unit({0} lvl {1})", _template.Type(),_level); 
+        return string.Format("Unit({0} lvl {1})", _template.Name(),_level); 
     }
 
     public bool SameSide(UnitModel model) => model._party == this._party;

@@ -14,8 +14,8 @@ public class Unit : MonoBehaviour
     [SerializeField] private int party;
     [SerializeField] private bool randomLevelUp;
     [SerializeField] private Orientation initialOrientation;
-    [SerializeField] private UnitType type;
-    [SerializeField] private List<WeaponType> weaponTypes;
+    [SerializeField] private UnitTemplate type;
+    [SerializeField] private List<WeaponTemplate> weaponTypes;
 
     private UnitModel _model;
     private Transform _transform;
@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour
         battlefieldComponent.AddUnit(this);
 
         List<WeaponModel> weapons = new List<WeaponModel>();
-        foreach (WeaponType weaponType in weaponTypes)
+        foreach (WeaponTemplate weaponType in weaponTypes)
             weapons.Add(WeaponModel.create(weaponType));
         
         _groudmap = battlefieldComponent.Groundmap;

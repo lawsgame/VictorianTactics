@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static WorldTileTemplate;
+
 
 [System.Serializable]
 public class Battle : MonoBehaviour
 {
     public GameObject tilePosIndicator;
 
+    [SerializeField] private int parties;
+    [SerializeField] private List<Opponents> opponents;
     [SerializeField] private Tilemap groundmap;
     
     private List<Unit> _units = null;
+    private PartyRelationshipRecorder _partyRecorder = null;
 
     public Tilemap Groundmap => groundmap;
     public List<Unit> Units() => Units(true);
-    
+    public PartyRelationshipRecorder PartyRecorder => _partyRecorder;
+
 
     /**  BATTLE FIELD COMPONENT INITIALIZATION **/
 
@@ -23,6 +27,8 @@ public class Battle : MonoBehaviour
     {
         List<WorldTileWrapper> worldMapTiles = GetMapAsTileList();
         SetMapDecorations(worldMapTiles);
+
+        _partyRecorder = PartyRelationshipRecorder.create(parties, opponents);
     }
 
     private void SetMapDecorations(List<WorldTileWrapper> worldMap)

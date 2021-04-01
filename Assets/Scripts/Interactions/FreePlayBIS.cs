@@ -39,7 +39,7 @@ public class FreePlayBIS : BattleInterractionState
                 Debug.Log("New selected unit: " + touchedUnit.name);
             }
             
-            if (touchedUnit == null && _selectedUnit != null && worldTile.Model.Traversable)
+            if (touchedUnit == null && _selectedUnit != null && worldTile.Traversable)
             {
                 DoCommand(new DisplaceCommand(Controller.Battlefield.Groundmap, _selectedUnit, cellPos));
             }

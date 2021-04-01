@@ -87,9 +87,9 @@ namespace TraversableAreaFinder
                 return;
 
             WorldTile tile = map.GetTile<WorldTile>(currentPos);
-            Node currentNode = new Node(currentPos, previousNode.Cost + tile.Model.MovementCost());
+            Node currentNode = new Node(currentPos, previousNode.Cost + tile.MovementCost());
 
-            if (!tile.Model.Traversable || currentNode.Cost > rangeMax)
+            if (!tile.Traversable || currentNode.Cost > rangeMax)
                 return;
 
             if (selectedTiles.ContainsKey(currentNode.Pos))

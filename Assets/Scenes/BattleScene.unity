@@ -237,12 +237,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
-  startingLevel: 5
+  startingLevel: 6
   party: 0
   randomLevelUp: 1
   initialOrientation: 2
-  type: 0
-  weaponTypes: 00000000
+  type: {fileID: 11400000, guid: 204364e004c77fd49b9c1af7c8956ad1, type: 2}
+  weaponTypes:
+  - {fileID: 11400000, guid: 8c15a86ac85a21642a6d514792a191df, type: 2}
 --- !u!114 &4345313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,12 +353,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
-  startingLevel: 10
+  startingLevel: 5
   party: 1
   randomLevelUp: 0
   initialOrientation: 0
-  type: 0
-  weaponTypes: 00000000
+  type: {fileID: 11400000, guid: 204364e004c77fd49b9c1af7c8956ad1, type: 2}
+  weaponTypes:
+  - {fileID: 11400000, guid: 8c15a86ac85a21642a6d514792a191df, type: 2}
 --- !u!95 &264449931
 Animator:
   serializedVersion: 3
@@ -1243,6 +1245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePosIndicator: {fileID: 2012613599494433488, guid: 41b6e8ac2da790345915d88d7c04121d,
     type: 3}
+  opponents:
+  - party1: 0
+    party2: 1
   groundmap: {fileID: 965896649}
 --- !u!1 &1891216137
 GameObject:

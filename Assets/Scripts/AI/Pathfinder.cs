@@ -96,7 +96,7 @@ namespace Tactics.Pathfinder
                 return new List<Node>();
 
             WorldTile targetTile = map.GetTile<WorldTile>(targetPos);
-            if (!targetTile.Model.Traversable)
+            if (!targetTile.Traversable)
                 return new List<Node>();
 
             // ---***$$$ find the shortest path $$$***---
@@ -136,7 +136,7 @@ namespace Tactics.Pathfinder
                 {
                     neighborTile = map.GetTile<WorldTile>(neighborPos);
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + 1, Dist(neighborPos, targetPos));
-                    if (neighborTile.Model.Traversable && !closedList.Contains(neighborNode))
+                    if (neighborTile.Traversable && !closedList.Contains(neighborNode))
                         elligibleNeighborNodes.Add(neighborNode);
                 }
 
@@ -145,7 +145,7 @@ namespace Tactics.Pathfinder
                 {
                     neighborTile = map.GetTile<WorldTile>(neighborPos);
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + 1, Dist(neighborPos, targetPos));
-                    if (neighborTile.Model.Traversable && !closedList.Contains(neighborNode))
+                    if (neighborTile.Traversable && !closedList.Contains(neighborNode))
                         elligibleNeighborNodes.Add(neighborNode);
                 }
 
@@ -154,7 +154,7 @@ namespace Tactics.Pathfinder
                 {
                     neighborTile = map.GetTile<WorldTile>(neighborPos);
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + 1, Dist(neighborPos, targetPos));
-                    if (neighborTile.Model.Traversable && !closedList.Contains(neighborNode))
+                    if (neighborTile.Traversable && !closedList.Contains(neighborNode))
                         elligibleNeighborNodes.Add(neighborNode);
                 }
 
@@ -163,7 +163,7 @@ namespace Tactics.Pathfinder
                 {
                     neighborTile = map.GetTile<WorldTile>(neighborPos);
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + 1, Dist(neighborPos, targetPos));
-                    if (neighborTile.Model.Traversable && !closedList.Contains(neighborNode))
+                    if (neighborTile.Traversable && !closedList.Contains(neighborNode))
                         elligibleNeighborNodes.Add(neighborNode);
                 }
 

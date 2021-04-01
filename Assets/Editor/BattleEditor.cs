@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 using static Battle;
 
 [CustomEditor(typeof(Battle))]
-public class BattlefieldEditor : Editor
+public class BattleEditor : Editor
 {
     private static readonly string label_MapCoords = "Map Coords";
 

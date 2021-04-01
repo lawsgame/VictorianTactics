@@ -26,10 +26,10 @@ public class WeaponModel
 
     private WeaponModel() { }
 
-    public static WeaponModel create (WeaponType type)
+    public static WeaponModel create (WeaponTemplate type)
     {
         WeaponModel instance = new WeaponModel();
-        instance._template = WeaponTemplate.Find(type);
+        instance._template = type;
         instance._durability = instance._template.DurabilityMax();
         return instance;
     }

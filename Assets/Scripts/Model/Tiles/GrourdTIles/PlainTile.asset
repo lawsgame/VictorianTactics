@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d368201f8e366f4591ae06ca7e3480f, type: 3}
-  m_Name: LowlandTile
+  m_Name: PlainTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: ee21699af46476a4ebc4c73bfa565dd2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -35,4 +35,11 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   decoration: {fileID: 0}
-  type: 11
+  _name: Plain
+  _movementCost: 1
+  _traversable: 1
+  _healAttrition: 0
+  _rangeBonus: 0
+  _accuracyBonus: 0
+  _avoidanceBonus: 0
+  _defenseBonus: 0
