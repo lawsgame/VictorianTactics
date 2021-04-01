@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 using static WorldTileTemplate;
 
 [System.Serializable]
-public class Battlefield : MonoBehaviour
+public class Battle : MonoBehaviour
 {
     public GameObject tilePosIndicator;
 

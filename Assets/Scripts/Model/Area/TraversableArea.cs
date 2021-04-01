@@ -5,11 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class TraversableArea : IAreaModel
 {
-    private readonly Battlefield _battlefield;
+    private readonly Battle _battlefield;
     private readonly Unit _walker;
 
 
-    public TraversableArea(Battlefield battlefield, Unit walker)
+    public TraversableArea(Battle battlefield, Unit walker)
     {
         this._battlefield = battlefield;
         this._walker = walker;

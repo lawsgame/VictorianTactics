@@ -31,7 +31,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        Battlefield battlefieldComponent = battlefield.GetComponent<Battlefield>();
+        Battle battlefieldComponent = battlefield.GetComponent<Battle>();
         battlefieldComponent.AddUnit(this);
 
         List<WeaponModel> weapons = new List<WeaponModel>();

@@ -3,9 +3,9 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Battlefield;
+using static Battle;
 
-[CustomEditor(typeof(Battlefield))]
+[CustomEditor(typeof(Battle))]
 public class BattlefieldEditor : Editor
 {
     private static readonly string label_MapCoords = "Map Coords";
@@ -19,13 +19,13 @@ public class BattlefieldEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        Battlefield battlefield = target as Battlefield;
+        Battle battlefield = target as Battle;
 
         ShowMapPositionButtons(battlefield);
     }
 
 
-    private void ShowMapPositionButtons(Battlefield battlefield)
+    private void ShowMapPositionButtons(Battle battlefield)
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label(label_MapCoords);

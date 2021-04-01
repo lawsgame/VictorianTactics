@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using static Battlefield;
+using static Battle;
 using Tactics.Pathfinder;
 using System.Linq;
 
@@ -36,7 +36,7 @@ public class MenuItemLibrary
     {
 
         GameObject go = GameObject.FindGameObjectWithTag("Ground");
-        Battlefield bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battlefield>();
+        Battle bf = GameObject.FindGameObjectWithTag("BattleField").GetComponent<Battle>();
         Tilemap groundTilemap = go.GetComponent<Tilemap>();
 
     }

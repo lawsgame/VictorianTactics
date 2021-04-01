@@ -10,17 +10,17 @@ public class PathFinderTest : MonoBehaviour
     [SerializeField] private int initX;
     [SerializeField] private int initY;
 
-    private Battlefield _battlefield;
+    private Battle _battlefield;
     private Vector3Int _initGridPos;
 
     private StateMachine<BattleInterractionState> _stateMachine;
 
-    public Battlefield Battlefield() => _battlefield;
+    public Battle Battlefield() => _battlefield;
 
     private void Awake()
     {
         GameObject battlefieldGameObject = GameObject.FindGameObjectWithTag("BattleField");
-        _battlefield = battlefieldGameObject.GetComponent<Battlefield>();
+        _battlefield = battlefieldGameObject.GetComponent<Battle>();
         _initGridPos = new Vector3Int(initX, initY, 0);
     }
 

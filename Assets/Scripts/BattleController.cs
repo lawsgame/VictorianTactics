@@ -10,18 +10,18 @@ public class BattleController : InputHandler
     [SerializeField] GameObject BattlefieldObject;
 
     private Camera _camera;
-    private Battlefield _battlefield;
+    private Battle _battlefield;
     private BattleInterractionState _currentState;
     private UnitModel model;
     private StateMachine<BattleInterractionState> _battleInterractionStateMachine;
     
     public Camera GameMainCamera => _camera;
-    public Battlefield Battlefield => _battlefield;
+    public Battle Battlefield => _battlefield;
     public StateMachine<BattleInterractionState> Machine => _battleInterractionStateMachine;
 
     private void Awake()
     {
-        _battlefield = BattlefieldObject.GetComponent<Battlefield>();
+        _battlefield = BattlefieldObject.GetComponent<Battle>();
         _camera = Camera.main;
     }
 

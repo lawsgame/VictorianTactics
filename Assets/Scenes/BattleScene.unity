@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 965896649}
   - component: {fileID: 965896648}
   m_Layer: 0
-  m_Name: GroundTilemap
+  m_Name: GroundMap
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1207,7 +1207,7 @@ GameObject:
   - component: {fileID: 982281585}
   - component: {fileID: 982281586}
   m_Layer: 0
-  m_Name: BattleField
+  m_Name: Battle
   m_TagString: BattleField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1238,7 +1238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 982281584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfffff7229c854043adad00e4b64dfd3, type: 3}
+  m_Script: {fileID: 11500000, guid: a9111cefafdbaac44be673316081ab40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tilePosIndicator: {fileID: 2012613599494433488, guid: 41b6e8ac2da790345915d88d7c04121d,

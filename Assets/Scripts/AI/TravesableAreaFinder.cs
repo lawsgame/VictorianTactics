@@ -48,12 +48,12 @@ namespace TraversableAreaFinder
     public static class Algorithm
     {
 
-        public static List<Vector3Int> GetTravesableArea(Battlefield battlefield, Unit unit)
+        public static List<Vector3Int> GetTravesableArea(Battle battlefield, Unit unit)
         {
             return GetTravesableArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
         }
 
-        public static List<Vector3Int> GetTravesableArea(Battlefield battlefield, Vector3Int initPos, int range, int partyNumber)
+        public static List<Vector3Int> GetTravesableArea(Battle battlefield, Vector3Int initPos, int range, int partyNumber)
         {
             
             if (!battlefield.Groundmap.HasTile(initPos))
@@ -78,7 +78,7 @@ namespace TraversableAreaFinder
         }
 
 
-        private static void ExpandArea(Battlefield battlefield, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
+        private static void ExpandArea(Battle battlefield, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
         {
             //Debug.Log("node candidate: " + currentNode);
 
