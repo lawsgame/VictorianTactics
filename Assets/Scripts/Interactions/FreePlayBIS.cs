@@ -97,7 +97,23 @@ public class FreePlayBIS : BattleInterractionState
     {
         Debug.Log(string.Format("Long Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
 
-        if(worldTile != null)
+        
+
+        if (worldTile != null && _selectedUnit != null)
+        {
+            Debug.Log("UNIT PATH");
+
+            // compute path
+            Battle battle = Controller.Battle;
+            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, _selectedUnit, cellPos);
+            Debug.Log(string.Join(" <- ", path));
+
+            // show path
+            Controller.AreaHandler.Remove(moveAreaId);
+            moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
+            Debug.Log("Area Created with ID: " + moveAreaId);
+            
+        }else if (worldTile != null)
         {
             // compute path
             Battle battle = Controller.Battle;
@@ -109,22 +125,6 @@ public class FreePlayBIS : BattleInterractionState
             moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
             Debug.Log("Area Created with ID: " + moveAreaId);
 
-            return;
-        }
-
-        if (worldTile != null && _selectedUnit != null)
-        { 
-
-            // compute path
-            List<Vector3Int> path = new List<Vector3Int>(); //Pathfinder.Algorithm.GetShortestPath(battle, _selectedUnit, cellPos);
-            foreach(Vector3Int pos in path)
-                Debug.Log("Path Pos: " + pos);
-
-            // show path
-            Controller.AreaHandler.Remove(moveAreaId);
-            moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
-            Debug.Log("Area Created with ID: " + moveAreaId);
-            
         }
     }
 }
