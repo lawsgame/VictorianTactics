@@ -16,7 +16,7 @@ public class Battle : MonoBehaviour
     private List<Unit> _units = null;
     private PartyRelationshipRecorder _partyRecorder = null;
 
-    public Tilemap Groundmap => groundmap;
+    public Tilemap Battlefield => groundmap;
     public List<Unit> Units() => Units(true);
     public PartyRelationshipRecorder PartyRecorder => _partyRecorder;
 

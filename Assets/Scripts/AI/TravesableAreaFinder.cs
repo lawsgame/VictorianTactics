@@ -56,7 +56,7 @@ namespace TraversableAreaFinder
         public static List<Vector3Int> GetTravesableArea(Battle battlefield, Vector3Int initPos, int range, int partyNumber)
         {
             
-            if (!battlefield.Groundmap.HasTile(initPos))
+            if (!battlefield.Battlefield.HasTile(initPos))
                 return new List<Vector3Int>();
 
             Dictionary<Vector3Int, Node> selectedNodes = new Dictionary<Vector3Int, Node>();
@@ -82,7 +82,7 @@ namespace TraversableAreaFinder
         {
             //Debug.Log("node candidate: " + currentNode);
 
-            Tilemap map = battlefield.Groundmap;
+            Tilemap map = battlefield.Battlefield;
             if (!map.HasTile(currentPos))
                 return;
 

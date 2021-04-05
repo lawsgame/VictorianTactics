@@ -38,7 +38,7 @@ public class Unit : MonoBehaviour
         foreach (WeaponTemplate weaponType in weaponTypes)
             weapons.Add(WeaponModel.create(weaponType));
         
-        _groudmap = battlefieldComponent.Groundmap;
+        _groudmap = battlefieldComponent.Battlefield;
         _model = UnitModel.create(startingLevel, party, type, weapons, randomLevelUp, initialOrientation);
         _transform = gameObject.transform;
         _scheduler = GetComponent<UnitAnimatorManager>();

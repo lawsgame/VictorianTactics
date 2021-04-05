@@ -211,7 +211,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 539420009
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f77a5e331299ba844be10749c8e5d1e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -313,7 +313,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 539420009
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 95325c08ce4fba849aa3407abf43d2c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1245,6 +1245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePosIndicator: {fileID: 2012613599494433488, guid: 41b6e8ac2da790345915d88d7c04121d,
     type: 3}
+  parties: 2
   opponents:
   - party1: 0
     party2: 1
@@ -1303,6 +1304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1908858276}
   - component: {fileID: 1908858275}
+  - component: {fileID: 1908858277}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1323,7 +1325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sensivityTime: 0.2
-  BattlefieldObject: {fileID: 982281584}
+  BattleObject: {fileID: 982281584}
 --- !u!4 &1908858276
 Transform:
   m_ObjectHideFlags: 0
@@ -1338,6 +1340,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1908858277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908858274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719a1e26a90210c45ab658dbc62e6e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaTemplate: {fileID: 906490002653596406, guid: c447a1ee9e7bf3a48ac8170ce1f94b93,
+    type: 3}
 --- !u!1 &1913974803
 GameObject:
   m_ObjectHideFlags: 3

@@ -47,6 +47,9 @@ TagManager:
   - name: Background
     uniqueID: 395998217
     locked: 0
+  - name: AreaLayer
+    uniqueID: 1535723025
+    locked: 0
   - name: Foreground
     uniqueID: 539420009
     locked: 0
@@ -54,5 +57,5 @@ TagManager:
     uniqueID: 90313613
     locked: 0
   - name: New Layer
-    uniqueID: 1535723025
+    uniqueID: 1314611893
     locked: 0

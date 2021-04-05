@@ -3,6 +3,7 @@
 public class FreePlayBIS : BattleInterractionState
 {
     private Unit _selectedUnit;
+    private int moveAreaId;
    
 
     public FreePlayBIS(BattleController controller) : base(controller)
@@ -18,7 +19,7 @@ public class FreePlayBIS : BattleInterractionState
 
     public override void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile)
     {
-        Unit touchedUnit = Controller.Battlefield.GetUnitFrom(cellPos);
+        Unit touchedUnit = Controller.Battle.GetUnitFrom(cellPos);
         Debug.Log("Long touch on " + touchedTile + ((touchedUnit !=null) ? " where "+ touchedUnit+" is standing" : ""));
     }
 
@@ -29,10 +30,9 @@ public class FreePlayBIS : BattleInterractionState
 
         if (worldTile != null)
         {
-            TraversableAreaFinder.Algorithm.GetTravesableArea(Controller.Battlefield, cellPos, 2, 0);
 
-
-            Unit touchedUnit = Controller.Battlefield.GetUnitFrom(cellPos);
+            Battle battle = Controller.Battle;
+            Unit touchedUnit = battle.GetUnitFrom(cellPos);
             if(touchedUnit != null)
             { 
                 _selectedUnit = touchedUnit;
@@ -41,7 +41,13 @@ public class FreePlayBIS : BattleInterractionState
             
             if (touchedUnit == null && _selectedUnit != null && worldTile.Traversable)
             {
-                DoCommand(new DisplaceCommand(Controller.Battlefield.Groundmap, _selectedUnit, cellPos));
+                // move unit
+                DoCommand(new DisplaceCommand(Controller.Battle.Battlefield, _selectedUnit, cellPos));
+
+                // show were the unit can move
+                Controller.AreaHandler.Remove(moveAreaId);
+                moveAreaId = Controller.AreaHandler.Show(battle, new TraversableArea(battle, _selectedUnit), AreaType.MOVE);
+                Debug.Log("Area Created with ID: " + moveAreaId);
             }
         }
     }

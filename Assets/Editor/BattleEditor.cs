@@ -45,7 +45,7 @@ public class BattleEditor : Editor
                 GameObject tilePosIndicator;
                 foreach (WorldTileWrapper wrapper in battlefield.GetMapAsTileList())
                 {
-                    tileWorldPosition = battlefield.Groundmap.CellToWorld(wrapper.position);
+                    tileWorldPosition = battlefield.Battlefield.CellToWorld(wrapper.position);
                     tilePosIndicator = Instantiate(battlefield.tilePosIndicator, tileWorldPosition, Quaternion.identity);
                     tilePosIndicator.transform.SetParent(textHolder.gameObject.transform);
                     tilePosIndicator.transform.position += new Vector3(0f, 0.25f, 0f); 

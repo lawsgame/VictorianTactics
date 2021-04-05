@@ -193,7 +193,7 @@ namespace Tactics.Pathfinder
 
         public static List<Node> GetShortestPath(Battle battlefield, Unit actor, Vector3Int targetPos)
         {
-            return GetShortestPath(battlefield.Groundmap, actor.GetMapPos(), targetPos);
+            return GetShortestPath(battlefield.Battlefield, actor.GetMapPos(), targetPos);
         }
     }
 }
