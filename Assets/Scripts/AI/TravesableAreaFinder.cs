@@ -96,7 +96,7 @@ namespace TraversableAreaFinder
                 return;
 
             if(battle.IsTileOccupiedByFoe(currentPos, partyNumber))
-                    return;
+                return;
              
             if (selectedTiles.ContainsKey(currentNode.Pos))
             {

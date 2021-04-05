@@ -96,7 +96,6 @@ public class FreePlayBIS : BattleInterractionState
     private void TestPathfinding(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePosition, WorldTile worldTile)
     {
         Debug.Log(string.Format("Long Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
-
         
 
         if (worldTile != null && _selectedUnit != null)
@@ -117,7 +116,7 @@ public class FreePlayBIS : BattleInterractionState
         {
             // compute path
             Battle battle = Controller.Battle;
-            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, new Vector3Int(0, 2, 0), cellPos);
+            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, new Vector3Int(0, 2, 0), cellPos, 99);
             Debug.Log(string.Join(" <- ", path));
 
             // show path

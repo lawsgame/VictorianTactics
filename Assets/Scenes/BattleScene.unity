@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
-  startingLevel: 6
+  startingLevel: 19
   party: 0
   randomLevelUp: 1
   initialOrientation: 2
@@ -9749,7 +9749,6 @@ GameObject:
   - component: {fileID: 1908858276}
   - component: {fileID: 1908858275}
   - component: {fileID: 1908858277}
-  - component: {fileID: 1908858278}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -9799,20 +9798,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaTemplate: {fileID: 906490002653596406, guid: c447a1ee9e7bf3a48ac8170ce1f94b93,
     type: 3}
---- !u!114 &1908858278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908858274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5165f3b60ea6ba4ca2ac6c41d267599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initX: 0
-  initY: 2
 --- !u!1 &1913974803
 GameObject:
   m_ObjectHideFlags: 3

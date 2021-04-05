@@ -35,7 +35,7 @@ public class PathFinderTest : MonoBehaviour
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int clickedCell = _battlefield.Battlefield.WorldToCell(mousePosition);
-            Debug.Log(string.Join(" <- ", Algorithm.GetShortestPath(_battlefield, _initGridPos, clickedCell)));
+            Debug.Log(string.Join(" <- ", Algorithm.GetShortestPath(_battlefield, _initGridPos, clickedCell, 99)));
             
         }
     }
