@@ -91,7 +91,7 @@ namespace Tactics.Pathfinder
     {
 
         // return path
-        public static List<Vector3Int> GetShortestPath(Battle battle, Vector3Int initPos, Vector3Int targetPos, int moveRange)
+        public static List<Vector3Int> GetShortestPath(Battle battle, Vector3Int initPos, Vector3Int targetPos, int moveRange, int partyNumber)
         {
             Tilemap map = battle.Battlefield;
 
@@ -143,7 +143,8 @@ namespace Tactics.Pathfinder
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + neighborTile.MovementCost(), Dist(neighborPos, targetPos));
                     if (neighborTile.Traversable 
                         && !closedList.Contains(neighborNode)
-                        && neighborNode.Gcost <= moveRange)
+                        && neighborNode.Gcost <= moveRange
+                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -157,7 +158,8 @@ namespace Tactics.Pathfinder
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + neighborTile.MovementCost(), Dist(neighborPos, targetPos));
                     if (neighborTile.Traversable
                         && !closedList.Contains(neighborNode)
-                        && neighborNode.Gcost <= moveRange)
+                        && neighborNode.Gcost <= moveRange
+                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -170,7 +172,8 @@ namespace Tactics.Pathfinder
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + neighborTile.MovementCost(), Dist(neighborPos, targetPos));
                     if (neighborTile.Traversable
                         && !closedList.Contains(neighborNode)
-                        && neighborNode.Gcost <= moveRange)
+                        && neighborNode.Gcost <= moveRange
+                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -183,7 +186,8 @@ namespace Tactics.Pathfinder
                     neighborNode = new Node(chosenNode, neighborPos, chosenNode.Gcost + neighborTile.MovementCost() , Dist(neighborPos, targetPos));
                     if (neighborTile.Traversable
                         && !closedList.Contains(neighborNode)
-                        && neighborNode.Gcost <= moveRange)
+                        && neighborNode.Gcost <= moveRange
+                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -213,7 +217,7 @@ namespace Tactics.Pathfinder
         }
 
 
-        public static List<Vector3Int> GetShortestPath(Battle battle, Unit actor, Vector3Int targetPos) => GetShortestPath(battle, actor.GetMapPos(), targetPos, actor.Model.Mobility());
+        public static List<Vector3Int> GetShortestPath(Battle battle, Unit actor, Vector3Int targetPos) => GetShortestPath(battle, actor.GetMapPos(), targetPos, actor.Model.Mobility(), actor.Model.Party());
         
     }
 }

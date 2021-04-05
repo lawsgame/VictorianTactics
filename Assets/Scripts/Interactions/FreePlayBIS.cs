@@ -116,7 +116,10 @@ public class FreePlayBIS : BattleInterractionState
         {
             // compute path
             Battle battle = Controller.Battle;
-            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, new Vector3Int(0, 2, 0), cellPos, 99);
+            int moveRange = 20;
+            int partyNumber = 0;
+            Vector3Int startingCell = new Vector3Int(0, 2, 0);
+            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, startingCell, cellPos, moveRange, partyNumber);
             Debug.Log(string.Join(" <- ", path));
 
             // show path

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SolarKnight
   m_EditorClassIdentifier: 
   _name: SolarKnight
-  _weaponMastered: 00000000
+  _weaponMastered: 0000000004000000
   _baseHitPoints: 15
   _baseStrenght: 3
   _baseDexterity: 3
