@@ -192,7 +192,7 @@ namespace Tactics.Pathfinder
                     }
                 }
             }
-            return chosenNode.GetPath();
+            return (chosenNode.Equals(targetNode)) ? chosenNode.GetPath() : new List<Vector3Int>();
         }
 
 
