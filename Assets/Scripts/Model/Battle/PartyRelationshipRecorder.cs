@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +12,11 @@ public class Opponents
 
 public class PartyRelationshipRecorder
 {
-    private bool[,] _partyMatrix;
+    private bool[,] _opponentMatrix;
 
 
     private PartyRelationshipRecorder() {
-        _partyMatrix = null;
+        _opponentMatrix = null;
     }
 
     public static PartyRelationshipRecorder create(int numberOfParties, List<Opponents> opponents)
@@ -29,7 +30,7 @@ public class PartyRelationshipRecorder
 
     public void ResetPartyMatrix(int numberOfParties) {
         if (numberOfParties > 0)
-            _partyMatrix = new bool[numberOfParties, numberOfParties];
+            _opponentMatrix = new bool[numberOfParties, numberOfParties];
         else
             Debug.LogErrorFormat("Reseting party matrix with value below 1: {0}", numberOfParties);
     }
@@ -39,8 +40,8 @@ public class PartyRelationshipRecorder
     {
         if(IsPartyNumberExist(party1) && IsPartyNumberExist(party2))
         {
-            _partyMatrix[party1, party2] = enemy;
-            _partyMatrix[party2, party1] = enemy;
+            _opponentMatrix[party1, party2] = enemy;
+            _opponentMatrix[party2, party1] = enemy;
         }
         else
         {
@@ -53,7 +54,7 @@ public class PartyRelationshipRecorder
     {
         if (IsPartyNumberExist(party1) && IsPartyNumberExist(party2))
         {
-            return _partyMatrix[party1, party2];
+            return _opponentMatrix[party1, party2];
         }
         else
         {
@@ -62,7 +63,20 @@ public class PartyRelationshipRecorder
         return false;
     }
 
-    public bool IsPartyNumberExist(int partyNumber) => _partyMatrix != null && partyNumber < _partyMatrix.Length && partyNumber >= 0;
+    public bool IsPartyNumberExist(int partyNumber) => _opponentMatrix != null && partyNumber < _opponentMatrix.Length && partyNumber >= 0;
+
+    internal bool SameSide(int party1, int party2)
+    {
+        if (IsPartyNumberExist(party1) && IsPartyNumberExist(party2))
+        {
+            return !_opponentMatrix[party1, party2];
+        }
+        else
+        {
+            Debug.LogErrorFormat("Set relationship between unknown party numbers; {0}, {1} ", party1, party2);
+        }
+        return false;
+    }
 }
 
 

@@ -11,12 +11,12 @@ public class Battle : MonoBehaviour
 
     [SerializeField] private int parties;
     [SerializeField] private List<Opponents> opponents;
-    [SerializeField] private Tilemap groundmap;
+    [SerializeField] private Tilemap battlefield;
     
     private List<Unit> _units = null;
     private PartyRelationshipRecorder _partyRecorder = null;
 
-    public Tilemap Battlefield => groundmap;
+    public Tilemap Battlefield => battlefield;
     public List<Unit> Units() => Units(true);
     public PartyRelationshipRecorder PartyRecorder => _partyRecorder;
 
@@ -31,6 +31,8 @@ public class Battle : MonoBehaviour
         _partyRecorder = PartyRelationshipRecorder.create(parties, opponents);
     }
 
+    //***$$$ BATTLEFIELD RENDERING
+
     private void SetMapDecorations(List<WorldTileWrapper> worldMap)
     {
         Vector3 tileWorldPosition;
@@ -39,7 +41,7 @@ public class Battle : MonoBehaviour
         {
             if (tileWrapper.tile.HasDecoration)
             {
-                tileWorldPosition = groundmap.CellToWorld(tileWrapper.position);
+                tileWorldPosition = battlefield.CellToWorld(tileWrapper.position);
                 decoration = Instantiate(tileWrapper.tile.decoration, tileWorldPosition, Quaternion.identity);
                 decoration.transform.SetParent(this.gameObject.transform);
                 
@@ -47,7 +49,29 @@ public class Battle : MonoBehaviour
         }
     }
 
-    //*** UNIT MANAGEMENT
+
+
+
+    //**$$$ TILE STATUS
+
+    public bool IsTileOccupied(Vector3Int cellpos) => GetUnitFrom(cellpos) != null;
+
+    public bool IsTileOccupiedByAlly(Vector3Int cellpos, int partyNumber)
+    {
+        Unit unit = GetUnitFrom(cellpos);
+        return unit != null && PartyRecorder.SameSide(unit.Model.Party(), partyNumber);
+    }
+
+    public bool IsTileOccupiedByFoe(Vector3Int cellpos, int partyNumber)
+    {
+        Unit unit = GetUnitFrom(cellpos);
+        return unit != null && PartyRecorder.AreOpposed(unit.Model.Party(), partyNumber);
+    }
+
+
+
+
+    //***$$$ UNIT ACCESS MANAGEMENT
 
     public void AddUnit(Unit unit)
     {
@@ -77,7 +101,7 @@ public class Battle : MonoBehaviour
         {
             if (u.gameObject.activeInHierarchy)
             {
-                unitPos = groundmap.WorldToCell(u.Transform.position);
+                unitPos = battlefield.WorldToCell(u.Transform.position);
                 if (unitPos.Equals(mapPos))
                 {
                     found = u;
@@ -88,12 +112,9 @@ public class Battle : MonoBehaviour
         return found;
     }
 
-    public bool IsTileOccupied(Vector3Int mapPos)
-    {
-        return GetUnitFrom(mapPos) == null;
-    }
 
-    //*** TILE MATRIX
+
+    //***$$$ TILE MATRIX
 
     public struct TileMatrix
     {
@@ -138,8 +159,8 @@ public class Battle : MonoBehaviour
 
     public TileMatrix GetMapAsTileMatrix()
     {
-        groundmap.CompressBounds();
-        BoundsInt worldBounds = groundmap.cellBounds;
+        battlefield.CompressBounds();
+        BoundsInt worldBounds = battlefield.cellBounds;
         TileMatrix matrix = new TileMatrix(worldBounds, 0);
         Vector3Int gridPosition;
         for (int i = worldBounds.min.x; i <= worldBounds.max.x; i++)
@@ -147,9 +168,9 @@ public class Battle : MonoBehaviour
             for (int j = worldBounds.min.y; j <= worldBounds.max.y; j++)
             {
                 gridPosition = new Vector3Int(i, j, 0);
-                if (groundmap.HasTile(gridPosition))
+                if (battlefield.HasTile(gridPosition))
                 {
-                    WorldTile tile = groundmap.GetTile(gridPosition) as WorldTile;
+                    WorldTile tile = battlefield.GetTile(gridPosition) as WorldTile;
                     matrix.tiles[i - worldBounds.min.x, j - worldBounds.min.y] = tile;
                 }
             }
@@ -160,8 +181,8 @@ public class Battle : MonoBehaviour
 
     public List<WorldTileWrapper> GetMapAsTileList()
     {
-        groundmap.CompressBounds();
-        BoundsInt worldBounds = groundmap.cellBounds;
+        battlefield.CompressBounds();
+        BoundsInt worldBounds = battlefield.cellBounds;
         List<WorldTileWrapper> tileList = new List<WorldTileWrapper>();
         Vector3Int gridPosition;
         for (int i = worldBounds.min.x; i <= worldBounds.max.x; i++)
@@ -169,9 +190,9 @@ public class Battle : MonoBehaviour
             for (int j = worldBounds.min.y; j <= worldBounds.max.y; j++)
             {
                 gridPosition = new Vector3Int(i, j, 0);
-                if (groundmap.HasTile(gridPosition))
+                if (battlefield.HasTile(gridPosition))
                 {
-                    WorldTile tile = groundmap.GetTile(gridPosition) as WorldTile;
+                    WorldTile tile = battlefield.GetTile(gridPosition) as WorldTile;
                     tileList.Add(new WorldTileWrapper(gridPosition, tile));
                 }
             }

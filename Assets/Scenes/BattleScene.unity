@@ -354,7 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
   startingLevel: 5
-  party: 1
+  party: 0
   randomLevelUp: 0
   initialOrientation: 0
   type: {fileID: 11400000, guid: 204364e004c77fd49b9c1af7c8956ad1, type: 2}
@@ -1249,7 +1249,7 @@ MonoBehaviour:
   opponents:
   - party1: 0
     party2: 1
-  groundmap: {fileID: 965896649}
+  battlefield: {fileID: 965896649}
 --- !u!1 &1891216137
 GameObject:
   m_ObjectHideFlags: 0

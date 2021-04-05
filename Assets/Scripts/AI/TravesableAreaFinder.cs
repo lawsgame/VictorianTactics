@@ -48,10 +48,8 @@ namespace TraversableAreaFinder
     public static class Algorithm
     {
 
-        public static List<Vector3Int> GetTravesableArea(Battle battlefield, Unit unit)
-        {
-            return GetTravesableArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
-        }
+        public static List<Vector3Int> GetTravesableArea(Battle battlefield, Unit unit) => GetTravesableArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
+        
 
         public static List<Vector3Int> GetTravesableArea(Battle battlefield, Vector3Int initPos, int range, int partyNumber)
         {
@@ -78,19 +76,23 @@ namespace TraversableAreaFinder
         }
 
 
-        private static void ExpandArea(Battle battlefield, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
+        private static void ExpandArea(Battle battle, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
         {
-            //Debug.Log("node candidate: " + currentNode);
+            // filters
 
-            Tilemap map = battlefield.Battlefield;
+            Tilemap map = battle.Battlefield;
             if (!map.HasTile(currentPos))
                 return;
 
             WorldTile tile = map.GetTile<WorldTile>(currentPos);
             Node currentNode = new Node(currentPos, previousNode.Cost + tile.MovementCost());
-
             if (!tile.Traversable || currentNode.Cost > rangeMax)
                 return;
+
+            
+            if(battle.IsTileOccupiedByFoe(currentPos, partyNumber))
+                    return;
+              
 
             if (selectedTiles.ContainsKey(currentNode.Pos))
             {
@@ -101,15 +103,18 @@ namespace TraversableAreaFinder
                     selectedTiles.Remove(currentNode.Pos);
             }
 
-            // current node is a selected one
+            // update selected nodes
+
             selectedTiles.Add(currentNode.Pos, currentNode);
             
             Debug.Log("node chosen " + currentPos+ " for "+currentNode.Cost);
 
-            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(1,0,0), rangeMax, partyNumber);
-            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(-1,0,0), rangeMax, partyNumber);
-            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,1,0), rangeMax, partyNumber);
-            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,-1,0), rangeMax, partyNumber);
+            // check neighbouring nodes and expand the area
+
+            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(1,0,0), rangeMax, partyNumber);
+            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(-1,0,0), rangeMax, partyNumber);
+            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,1,0), rangeMax, partyNumber);
+            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,-1,0), rangeMax, partyNumber);
         }
     }
 
