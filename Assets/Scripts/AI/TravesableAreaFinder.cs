@@ -10,12 +10,18 @@ namespace TraversableAreaFinder
     {
         public Vector3Int Pos { get; } // position of the tile on the tilemap
         public int Cost { get; set;  }  // distance from initial position
+        public int Children { get; set; }
+        public Node Parent { get; set; }
 
-        public Node(Vector3Int gridPosInput, int cost)
+        public Node(Node parent, Vector3Int gridPosInput, int cost)
         {
+            this.Parent = parent;
             this.Pos = gridPosInput;
             this.Cost = cost;
+            this.Children = 0;
         }
+
+        public bool IsRoot() => Parent == null;
 
         public int CompareTo(object o)
         {
@@ -34,7 +40,7 @@ namespace TraversableAreaFinder
 
         public override bool Equals(object o)
         {
-            if (o.GetType() == typeof(Node))
+            if (o != null && o.GetType() == typeof(Node))
             {
                 Node other = (Node)o;
                 return other.Pos.x == Pos.x && other.Pos.y == Pos.y;
@@ -58,7 +64,7 @@ namespace TraversableAreaFinder
                 return new List<Vector3Int>();
 
             Dictionary<Vector3Int, Node> selectedNodes = new Dictionary<Vector3Int, Node>();
-            Node rootNode = new Node(initPos, 0);
+            Node rootNode = new Node(null, initPos, 0);
             selectedNodes.Add(rootNode.Pos, rootNode);
             ExpandArea(battlefield, selectedNodes, rootNode, initPos + new Vector3Int(1, 0, 0), range, partyNumber);
             ExpandArea(battlefield, selectedNodes, rootNode, initPos + new Vector3Int(-1, 0, 0), range, partyNumber);
@@ -78,22 +84,20 @@ namespace TraversableAreaFinder
 
         private static void ExpandArea(Battle battle, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
         {
-            // filters
+            // filters unworthy nodes
 
-            Tilemap map = battle.Battlefield;
+            Tilemap map = battle.Battlefield; 
             if (!map.HasTile(currentPos))
                 return;
 
             WorldTile tile = map.GetTile<WorldTile>(currentPos);
-            Node currentNode = new Node(currentPos, previousNode.Cost + tile.MovementCost());
+            Node currentNode = new Node(previousNode, currentPos, previousNode.Cost + tile.MovementCost());
             if (!tile.Traversable || currentNode.Cost > rangeMax)
                 return;
 
-            
             if(battle.IsTileOccupiedByFoe(currentPos, partyNumber))
                     return;
-              
-
+             
             if (selectedTiles.ContainsKey(currentNode.Pos))
             {
                 Node oldNode = selectedTiles[currentNode.Pos];
@@ -103,9 +107,10 @@ namespace TraversableAreaFinder
                     selectedTiles.Remove(currentNode.Pos);
             }
 
-            // update selected nodes
+            // add the current node to the selected ones
 
             selectedTiles.Add(currentNode.Pos, currentNode);
+            previousNode.Children += 1;
             
             Debug.Log("node chosen " + currentPos+ " for "+currentNode.Cost);
 
@@ -115,7 +120,27 @@ namespace TraversableAreaFinder
             ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(-1,0,0), rangeMax, partyNumber);
             ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,1,0), rangeMax, partyNumber);
             ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,-1,0), rangeMax, partyNumber);
+
+            // if the furthest tile of one of paths is occupied by an ally, remove it 
+
+            RemoveChildlessOccupiedNodes(battle, selectedTiles, currentNode);
         }
+
+        private static void RemoveChildlessOccupiedNodes(Battle battle, Dictionary<Vector3Int, Node> selectedNodes, Node currentNode)
+        {
+            if (currentNode.Children == 0 && battle.IsTileOccupied(currentNode.Pos) && selectedNodes.ContainsKey(currentNode.Pos))
+            {
+                selectedNodes.Remove(currentNode.Pos);
+                Debug.Log("Remove childless occupied tile : " + currentNode+" => is root? "+currentNode.IsRoot());
+                if (!currentNode.IsRoot())
+                {
+                    currentNode.Parent.Children--;
+                    RemoveChildlessOccupiedNodes(battle, selectedNodes, currentNode.Parent);
+                }
+            }
+            
+        }
+
     }
 
 }
