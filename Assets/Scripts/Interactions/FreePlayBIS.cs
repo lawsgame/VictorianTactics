@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class FreePlayBIS : BattleInterractionState
 {
@@ -19,42 +21,19 @@ public class FreePlayBIS : BattleInterractionState
 
     public override void OnLongTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 MousePosition, WorldTile touchedTile)
     {
-        Unit touchedUnit = Controller.Battle.GetUnitFrom(cellPos);
-        Debug.Log("Long touch on " + touchedTile + ((touchedUnit !=null) ? " where "+ touchedUnit+" is standing" : ""));
+        TestPathfinding(cellPos, worldPos, MousePosition, touchedTile);
     }
 
 
     public override void OnTouch(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePosition, WorldTile worldTile)
     {
-        Debug.Log(string.Format("Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
-
-        if (worldTile != null)
-        {
-
-            Battle battle = Controller.Battle;
-            Unit touchedUnit = battle.GetUnitFrom(cellPos);
-            if(touchedUnit != null)
-            { 
-                _selectedUnit = touchedUnit;
-                Debug.Log("New selected unit: " + touchedUnit.name);
-            }
-            
-            if (touchedUnit == null && _selectedUnit != null && worldTile.Traversable)
-            {
-                // move unit
-                DoCommand(new DisplaceCommand(Controller.Battle.Battlefield, _selectedUnit, cellPos));
-
-                // show were the unit can move
-                Controller.AreaHandler.Remove(moveAreaId);
-                moveAreaId = Controller.AreaHandler.Show(battle, new TraversableArea(battle, _selectedUnit), AreaType.MOVE);
-                Debug.Log("Area Created with ID: " + moveAreaId);
-            }
-        }
+        TestDisplaceCommandAndTraversableArea(cellPos, worldPos, mousePosition, worldTile);
     }
 
 
     public override void OnDoubleTap(Vector3Int tilePos, Vector2 worldPos, Vector2 mousePos, WorldTile worldTile)
     {
+        Controller.AreaHandler.RemoveAll();
         if (UndoLastCommand())
             Debug.Log("undone");
         else
@@ -82,6 +61,70 @@ public class FreePlayBIS : BattleInterractionState
                     break;
             }
 
+        }
+    }
+
+    private void TestDisplaceCommandAndTraversableArea(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePosition, WorldTile worldTile)
+    {
+
+        Debug.Log(string.Format("Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
+
+        if (worldTile != null)
+        {
+
+            Battle battle = Controller.Battle;
+            Unit touchedUnit = battle.GetUnitFrom(cellPos);
+            if (touchedUnit != null)
+            {
+                _selectedUnit = touchedUnit;
+                Debug.Log("New selected unit: " + touchedUnit.name);
+            }
+
+            if (touchedUnit == null && _selectedUnit != null && worldTile.Traversable)
+            {
+                // move unit
+                DoCommand(new DisplaceCommand(Controller.Battle.Battlefield, _selectedUnit, cellPos));
+
+                // show were the unit can move
+                Controller.AreaHandler.Remove(moveAreaId);
+                moveAreaId = Controller.AreaHandler.Create(battle, new TraversableArea(battle, _selectedUnit), AreaType.MOVE);
+                Debug.Log("Area Created with ID: " + moveAreaId);
+            }
+        }
+    }
+
+    private void TestPathfinding(Vector3Int cellPos, Vector2 worldPos, Vector2 mousePosition, WorldTile worldTile)
+    {
+        Debug.Log(string.Format("Long Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
+
+        if(worldTile != null)
+        {
+            // compute path
+            Battle battle = Controller.Battle;
+            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, new Vector3Int(0, 2, 0), cellPos);
+            Debug.Log(string.Join(" <- ", path));
+
+            // show path
+            Controller.AreaHandler.Remove(moveAreaId);
+            moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
+            Debug.Log("Area Created with ID: " + moveAreaId);
+
+            return;
+        }
+
+        if (worldTile != null && _selectedUnit != null)
+        { 
+
+            // compute path
+            List<Vector3Int> path = new List<Vector3Int>(); //Pathfinder.Algorithm.GetShortestPath(battle, _selectedUnit, cellPos);
+            foreach(Vector3Int pos in path)
+                Debug.Log("Path Pos: " + pos);
+
+            // show path
+            Controller.AreaHandler.Remove(moveAreaId);
+            moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
+            Debug.Log("Area Created with ID: " + moveAreaId);
+            
         }
     }
 }

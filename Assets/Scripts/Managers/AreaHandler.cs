@@ -18,7 +18,7 @@ public class AreaHandler : MonoBehaviour
         areas = new Dictionary<int, IAreaRenderer>();
     }
 
-    public int Show(Battle battle, IAreaModel model, AreaType type)
+    public int Create(Battle battle, IAreaModel model, AreaType type)
     {
         cursor += 1;
         int index = cursor;
@@ -48,10 +48,7 @@ public class AreaHandler : MonoBehaviour
 
     public void RemoveAll()
     {
-        foreach(int index in areas.Keys)
-        {
-            Remove(index);
-        }
+        areas.Clear();
     }
 
 

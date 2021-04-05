@@ -25,19 +25,23 @@ namespace Tactics.Pathfinder
 
         public bool IsRoot => Parent == null;
 
-        public List<Node> GetPath() =>  GetPath(new List<Node>());
+        public List<Node> GetNodePath() => GetNodePath(new List<Node>());
 
-        private List<Node> GetPath(List<Node> endOf)
+        private List<Node> GetNodePath(List<Node> endOf)
         {
             endOf.Add(this);
             if (IsRoot)
-            {
                 return endOf;
-            }
             else
-            {
-                return Parent.GetPath(endOf);
-            }
+                return Parent.GetNodePath(endOf);
+        }
+
+        public List<Vector3Int> GetPath()
+        {
+            List<Vector3Int> path = new List<Vector3Int>();
+            foreach (Node node in GetNodePath())
+                path.Add(node.Pos);
+            return path;
         }
 
         public int CompareTo(object o)
@@ -87,17 +91,18 @@ namespace Tactics.Pathfinder
     {
 
         // return path
-        public static List<Node> GetShortestPath(Tilemap map, Vector3Int initPos, Vector3Int targetPos)
+        public static List<Vector3Int> GetShortestPath(Battle battle, Vector3Int initPos, Vector3Int targetPos)
         {
+            Tilemap map = battle.Battlefield;
 
             // check if targetPos and initPos within the tilemap and accessible
 
             if (!map.HasTile(initPos) || !map.HasTile(targetPos))
-                return new List<Node>();
+                return new List<Vector3Int>();
 
             WorldTile targetTile = map.GetTile<WorldTile>(targetPos);
             if (!targetTile.Traversable)
-                return new List<Node>();
+                return new List<Vector3Int>();
 
             // ---***$$$ find the shortest path $$$***---
 
@@ -118,7 +123,7 @@ namespace Tactics.Pathfinder
                 closedList.Add(chosenNode);
                 openList.RemoveAt(0);
 
-                Debug.Log(string.Format("\nChosen {0}\nOpen : {1}\nClosed: {2} ", chosenNode.ToLongString(), string.Join("|", openList), string.Join("/", closedList)));
+                Debug.Log(string.Format("Algo current status (see below) \nChosen {0}\nOpen : {1}\nClosed: {2} ", chosenNode.ToLongString(), string.Join("|", openList), string.Join("/", closedList)));
 
                 // quit the loop if the chosen node is the target one
 
@@ -191,9 +196,7 @@ namespace Tactics.Pathfinder
         }
 
 
-        public static List<Node> GetShortestPath(Battle battlefield, Unit actor, Vector3Int targetPos)
-        {
-            return GetShortestPath(battlefield.Battlefield, actor.GetMapPos(), targetPos);
-        }
+        public static List<Vector3Int> GetShortestPath(Battle battle, Unit actor, Vector3Int targetPos) => GetShortestPath(battle, actor.GetMapPos(), targetPos);
+        
     }
 }
