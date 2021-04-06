@@ -73,7 +73,7 @@ public class FreePlayBIS : BattleInterractionState
         if (worldTile != null)
         {
 
-            Battle battle = Controller.Battle;
+            Battlefield battle = Controller.Battlefield;
             Unit touchedUnit = battle.GetUnitFrom(cellPos);
             if (touchedUnit != null)
             {
@@ -84,7 +84,7 @@ public class FreePlayBIS : BattleInterractionState
             if (touchedUnit == null && _selectedUnit != null && worldTile.Traversable)
             {
                 // move unit
-                DoCommand(new DisplaceCommand(Controller.Battle.Battlefield, _selectedUnit, cellPos));
+                DoCommand(new DisplaceCommand(Controller.Battlefield.Map, _selectedUnit, cellPos));
 
                 // show were the unit can move
                 Controller.AreaHandler.Remove(moveAreaId);
@@ -108,29 +108,29 @@ public class FreePlayBIS : BattleInterractionState
             Debug.Log("UNIT PATH");
 
             // compute path
-            Battle battle = Controller.Battle;
-            List<Vector3Int> path = Pathfinder.Algorithm.GetShortestPath(battle, _selectedUnit, cellPos);
+            Battlefield bf = Controller.Battlefield;
+            List<Vector3Int> path = Pathfinder.Algorithm.GetShortestPath(bf, _selectedUnit, cellPos);
             Debug.Log(string.Join(" <- ", path));
 
             // show path
             Controller.AreaHandler.Remove(moveAreaId);
-            moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
+            moveAreaId = Controller.AreaHandler.Create(Controller.Battlefield, new GenericArea(Controller.Battlefield, path), AreaType.MOVE);
             Debug.Log("Area Created with ID: " + moveAreaId);
             
         }
         else if (worldTile != null)
         {
             // compute path
-            Battle battle = Controller.Battle;
+            Battlefield bf = Controller.Battlefield;
             int moveRange = 20;
             int partyNumber = 0;
             Vector3Int startingCell = new Vector3Int(0, 2, 0);
-            List<Vector3Int> path = Pathfinder.Algorithm.GetShortestPath(battle, startingCell, cellPos, moveRange, partyNumber);
+            List<Vector3Int> path = Pathfinder.Algorithm.GetShortestPath(bf, startingCell, cellPos, moveRange, partyNumber);
             Debug.Log(string.Join(" <- ", path));
 
             // show path
             Controller.AreaHandler.Remove(moveAreaId);
-            moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
+            moveAreaId = Controller.AreaHandler.Create(Controller.Battlefield, new GenericArea(Controller.Battlefield, path), AreaType.MOVE);
             Debug.Log("Area Created with ID: " + moveAreaId);
 
         }

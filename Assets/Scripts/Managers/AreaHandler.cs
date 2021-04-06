@@ -18,17 +18,17 @@ public class AreaHandler : MonoBehaviour
         areas = new Dictionary<int, IAreaRenderer>();
     }
 
-    public int Create(Battle battle, IAreaModel model, AreaType type)
+    public int Create(Battlefield battlefield, IAreaModel model, AreaType type)
     {
         cursor += 1;
         int index = cursor;
 
-        GameObject areaClone = GameObject.Instantiate(areaTemplate, Vector3.zero, Quaternion.identity, battle.transform);
+        GameObject areaClone = GameObject.Instantiate(areaTemplate, Vector3.zero, Quaternion.identity, battlefield.transform);
         
         IAreaRenderer drawer = areaClone.GetComponent<IAreaRenderer>();
         drawer.Model = model;
         drawer.Type = type;
-        drawer.Draw(battle.Battlefield);
+        drawer.Draw(battlefield.Map);
 
         areas.Add(index, drawer);
         return index;

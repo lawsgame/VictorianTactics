@@ -5,11 +5,11 @@ using UnityEngine;
 public class GenericArea : IAreaModel
 {
     private readonly List<Vector3Int> cellposs;
-    private readonly Battle battle;
+    private readonly Battlefield battlefield;
 
-    public GenericArea(Battle battle, List<Vector3Int> cellposs)
+    public GenericArea(Battlefield battlefield, List<Vector3Int> cellposs)
     {
-        this.battle = battle;
+        this.battlefield = battlefield;
         this.cellposs = cellposs;
     }
 
@@ -20,9 +20,9 @@ public class GenericArea : IAreaModel
         List<WorldTile> tiles = new List<WorldTile>();
         foreach(Vector3Int cellpos in cellposs)
         {
-            if (battle.Battlefield.HasTile(cellpos))
+            if (battlefield.Map.HasTile(cellpos))
             {
-                tiles.Add(battle.Battlefield.GetTile<WorldTile>(cellpos));
+                tiles.Add(battlefield.Map.GetTile<WorldTile>(cellpos));
             }
         }
         return tiles;

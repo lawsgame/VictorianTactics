@@ -6,7 +6,7 @@ using static Data;
 [System.Serializable]
 public class UnitModel
 {
-    // battle attributes
+    // battlefield attributes
     public bool acted = false;
     public bool moved = false;
     public Orientation orientation;

@@ -31,14 +31,14 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        Battle battlefieldComponent = battlefield.GetComponent<Battle>();
-        battlefieldComponent.AddUnit(this);
+        UnitRegistry registry = battlefield.GetComponent<UnitRegistry>();
+        registry.AddUnit(this);
 
         List<WeaponModel> weapons = new List<WeaponModel>();
         foreach (WeaponTemplate weaponType in weaponTypes)
             weapons.Add(WeaponModel.create(weaponType));
         
-        _groudmap = battlefieldComponent.Battlefield;
+        _groudmap = battlefield.GetComponent<Tilemap>();
         _model = UnitModel.create(startingLevel, party, type, weapons, randomLevelUp, initialOrientation);
         _transform = gameObject.transform;
         _scheduler = GetComponent<UnitAnimatorManager>();

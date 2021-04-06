@@ -91,9 +91,9 @@ namespace Pathfinder
     {
 
         // return path
-        public static List<Vector3Int> GetShortestPath(Battle battle, Vector3Int initPos, Vector3Int targetPos, int moveRange, int partyNumber)
+        public static List<Vector3Int> GetShortestPath(Battlefield battlefield, Vector3Int initPos, Vector3Int targetPos, int moveRange, int partyNumber)
         {
-            Tilemap map = battle.Battlefield;
+            Tilemap map = battlefield.Map;
 
             // check if targetPos and initPos within the tilemap and accessible
 
@@ -101,7 +101,7 @@ namespace Pathfinder
                 return new List<Vector3Int>();
 
             WorldTile targetTile = map.GetTile<WorldTile>(targetPos);
-            if (!targetTile.Traversable || battle.IsTileOccupied(targetPos))
+            if (!targetTile.Traversable || battlefield.IsTileOccupied(targetPos))
                 return new List<Vector3Int>();
 
             // ---***$$$ find the shortest path $$$***---
@@ -144,7 +144,7 @@ namespace Pathfinder
                     if (neighborTile.Traversable 
                         && !closedList.Contains(neighborNode)
                         && neighborNode.Gcost <= moveRange
-                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
+                        && !battlefield.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -159,7 +159,7 @@ namespace Pathfinder
                     if (neighborTile.Traversable
                         && !closedList.Contains(neighborNode)
                         && neighborNode.Gcost <= moveRange
-                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
+                        && !battlefield.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -173,7 +173,7 @@ namespace Pathfinder
                     if (neighborTile.Traversable
                         && !closedList.Contains(neighborNode)
                         && neighborNode.Gcost <= moveRange
-                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
+                        && !battlefield.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -187,7 +187,7 @@ namespace Pathfinder
                     if (neighborTile.Traversable
                         && !closedList.Contains(neighborNode)
                         && neighborNode.Gcost <= moveRange
-                        && !battle.IsTileOccupiedByFoe(neighborPos, partyNumber))
+                        && !battlefield.IsTileOccupiedByFoe(neighborPos, partyNumber))
                     {
                         elligibleNeighborNodes.Add(neighborNode);
                     }
@@ -217,7 +217,7 @@ namespace Pathfinder
         }
 
 
-        public static List<Vector3Int> GetShortestPath(Battle battle, Unit actor, Vector3Int targetPos) => GetShortestPath(battle, actor.GetMapPos(), targetPos, actor.Model.Mobility(), actor.Model.Party());
+        public static List<Vector3Int> GetShortestPath(Battlefield battlefield, Unit actor, Vector3Int targetPos) => GetShortestPath(battlefield, actor.GetMapPos(), targetPos, actor.Model.Mobility(), actor.Model.Party());
         
     }
 }

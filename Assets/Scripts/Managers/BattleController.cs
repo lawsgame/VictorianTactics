@@ -1,28 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class BattleController : InputHandler
 {
     
-    [SerializeField] GameObject BattleObject;
+    [SerializeField] GameObject BattlefieldObject;
 
     private Camera _camera;
-    private Battle _battle;
+    private Battlefield _battlefield;
     private AreaHandler _areaHandler;
     private BattleInterractionState _currentState;
     private StateMachine<BattleInterractionState> _battleInterractionStateMachine;
     
     public Camera GameMainCamera => _camera;
-    public Battle Battle => _battle;
+    public Battlefield Battlefield => _battlefield;
     public AreaHandler AreaHandler => _areaHandler;
     public StateMachine<BattleInterractionState> Machine => _battleInterractionStateMachine;
 
     private void Awake()
     {
-        _battle = BattleObject.GetComponent<Battle>();
+        _battlefield = BattlefieldObject.GetComponent<Battlefield>();
         _areaHandler = GetComponent<AreaHandler>();
         _camera = Camera.main;
     }
@@ -42,24 +39,24 @@ public class BattleController : InputHandler
     public override void OnTouch(Vector2 mousePos)
     {
         Vector2 worldPos = GameMainCamera.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int tilePos = Battle.Battlefield.WorldToCell(worldPos);
-        WorldTile worldTile = Battle.Battlefield.GetTile<WorldTile>(tilePos);
+        Vector3Int tilePos = Battlefield.Map.WorldToCell(worldPos);
+        WorldTile worldTile = Battlefield.Map.GetTile<WorldTile>(tilePos);
         _battleInterractionStateMachine.GetCurrentState().OnTouch(tilePos, worldPos, mousePos, worldTile);
     }
 
     public override void OnLongTouch(Vector2 mousePos)
     {
         Vector2 worldPos = GameMainCamera.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int tilePos = Battle.Battlefield.WorldToCell(worldPos);
-        WorldTile worldTile = Battle.Battlefield.GetTile<WorldTile>(tilePos);
+        Vector3Int tilePos = Battlefield.Map.WorldToCell(worldPos);
+        WorldTile worldTile = Battlefield.Map.GetTile<WorldTile>(tilePos);
         _battleInterractionStateMachine.GetCurrentState().OnLongTouch(tilePos, worldPos, mousePos, worldTile);
     }
 
     public override void OnDoubleTap(Vector2 mousePos)
     {
         Vector2 worldPos = GameMainCamera.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int tilePos = Battle.Battlefield.WorldToCell(worldPos);
-        WorldTile worldTile = Battle.Battlefield.GetTile<WorldTile>(tilePos);
+        Vector3Int tilePos = Battlefield.Map.WorldToCell(worldPos);
+        WorldTile worldTile = Battlefield.Map.GetTile<WorldTile>(tilePos);
         _battleInterractionStateMachine.GetCurrentState().OnDoubleTap(tilePos, worldPos, mousePos, worldTile);
     }
 

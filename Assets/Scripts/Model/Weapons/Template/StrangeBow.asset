@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Strange bow
   clazz: 4
   subClazz: 0
-  rangeMin: 3
+  rangeMin: 4
   rangeMax: 4
   powerMin: 1
   powerMax: 1

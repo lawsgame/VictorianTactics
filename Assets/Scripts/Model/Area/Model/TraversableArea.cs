@@ -5,17 +5,17 @@ using UnityEngine.Tilemaps;
 
 public class TraversableArea : IAreaModel
 {
-    private readonly Battle _battle;
+    private readonly Battlefield _battlefield;
     private readonly Unit _walker;
 
 
-    public TraversableArea(Battle battle, Unit walker)
+    public TraversableArea(Battlefield battlefield, Unit walker)
     {
-        this._battle = battle;
+        this._battlefield = battlefield;
         this._walker = walker;
     }
 
-    public List<Vector3Int> GetCells() => ActionAreaFinder.Algorithm.FindMoveArea(_battle, _walker);
+    public List<Vector3Int> GetCells() => ActionAreaFinder.Algorithm.FindMoveArea(_battlefield, _walker);
 
     public List<WorldTile> GetTiles()
     {
@@ -23,7 +23,7 @@ public class TraversableArea : IAreaModel
         List<Vector3Int> areaGridPos = GetCells();
         foreach (Vector3Int gridpos in areaGridPos)
         {
-            worldTiles.Add(_battle.Battlefield.GetTile<WorldTile>(gridpos));
+            worldTiles.Add(_battlefield.Map.GetTile<WorldTile>(gridpos));
         }
         return worldTiles;
     }

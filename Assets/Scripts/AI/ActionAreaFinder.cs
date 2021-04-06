@@ -54,13 +54,13 @@ namespace ActionAreaFinder
     public static class Algorithm
     {
 
-        public static List<Vector3Int> FindMoveArea(Battle battlefield, Unit unit) => FindMoveArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
+        public static List<Vector3Int> FindMoveArea(Battlefield battlefield, Unit unit) => FindMoveArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
         
 
-        public static List<Vector3Int> FindMoveArea(Battle battlefield, Vector3Int initPos, int range, int partyNumber)
+        public static List<Vector3Int> FindMoveArea(Battlefield battlefield, Vector3Int initPos, int range, int partyNumber)
         {
             
-            if (!battlefield.Battlefield.HasTile(initPos))
+            if (!battlefield.Map.HasTile(initPos))
                 return new List<Vector3Int>();
 
             Dictionary<Vector3Int, Node> selectedNodes = new Dictionary<Vector3Int, Node>();
@@ -82,11 +82,11 @@ namespace ActionAreaFinder
         }
 
 
-        private static void ExpandArea(Battle battle, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
+        private static void ExpandArea(Battlefield battlefield, Dictionary<Vector3Int, Node> selectedTiles, Node previousNode, Vector3Int currentPos, int rangeMax, int partyNumber)
         {
             // filters unworthy nodes
 
-            Tilemap map = battle.Battlefield; 
+            Tilemap map = battlefield.Map; 
             if (!map.HasTile(currentPos))
                 return;
 
@@ -95,7 +95,7 @@ namespace ActionAreaFinder
             if (!tile.Traversable || currentNode.Cost > rangeMax)
                 return;
 
-            if(battle.IsTileOccupiedByFoe(currentPos, partyNumber))
+            if(battlefield.IsTileOccupiedByFoe(currentPos, partyNumber))
                 return;
              
             if (selectedTiles.ContainsKey(currentNode.Pos))
@@ -116,32 +116,32 @@ namespace ActionAreaFinder
 
             // check neighbouring nodes and expand the area
 
-            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(1,0,0), rangeMax, partyNumber);
-            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(-1,0,0), rangeMax, partyNumber);
-            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,1,0), rangeMax, partyNumber);
-            ExpandArea(battle, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,-1,0), rangeMax, partyNumber);
+            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(1,0,0), rangeMax, partyNumber);
+            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(-1,0,0), rangeMax, partyNumber);
+            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,1,0), rangeMax, partyNumber);
+            ExpandArea(battlefield, selectedTiles, currentNode, currentNode.Pos + new Vector3Int(0,-1,0), rangeMax, partyNumber);
 
             // if the furthest tile of one of paths is occupied by an ally, remove it 
 
-            RemoveChildlessOccupiedNodes(battle, selectedTiles, currentNode);
+            RemoveChildlessOccupiedNodes(battlefield, selectedTiles, currentNode);
         }
 
-        private static void RemoveChildlessOccupiedNodes(Battle battle, Dictionary<Vector3Int, Node> selectedNodes, Node currentNode)
+        private static void RemoveChildlessOccupiedNodes(Battlefield battlefield, Dictionary<Vector3Int, Node> selectedNodes, Node currentNode)
         {
-            if (currentNode.Children == 0 && battle.IsTileOccupied(currentNode.Pos) && selectedNodes.ContainsKey(currentNode.Pos))
+            if (currentNode.Children == 0 && battlefield.IsTileOccupied(currentNode.Pos) && selectedNodes.ContainsKey(currentNode.Pos))
             {
                 selectedNodes.Remove(currentNode.Pos);
                 Debug.Log("Remove childless occupied tile : " + currentNode+" => is root? "+currentNode.IsRoot());
                 if (!currentNode.IsRoot())
                 {
                     currentNode.Parent.Children--;
-                    RemoveChildlessOccupiedNodes(battle, selectedNodes, currentNode.Parent);
+                    RemoveChildlessOccupiedNodes(battlefield, selectedNodes, currentNode.Parent);
                 }
             }
             
         }
 
-        public static List<Vector3Int> FindAttackArea(List<Vector3Int> standingPointList, Battle battle, Unit actor)
+        public static List<Vector3Int> FindAttackArea(List<Vector3Int> standingPointList, Battlefield battle, Unit actor)
         {
             int rangeMin = actor.Model.CurrentWeapon().Template().RangeMin();
             int rangeMax = actor.Model.CurrentWeapon().Template().RangeMax();
@@ -149,11 +149,11 @@ namespace ActionAreaFinder
             return FindAttackArea(standingPointList, battle, rangeMin, rangeMax, actorPos);
         }
 
-        public static List<Vector3Int> FindAttackArea(List<Vector3Int> standingPointList, Battle battle, int rangeMin, int rangeMax, Vector3Int actorPos)
+        public static List<Vector3Int> FindAttackArea(List<Vector3Int> standingPointList, Battlefield battlefield, int rangeMin, int rangeMax, Vector3Int actorPos)
         {
             standingPointList.Add(actorPos);
 
-            ConcentricArea area = new ConcentricArea(battle.Battlefield);
+            ConcentricArea area = new ConcentricArea(battlefield.Map);
             area.RangeMin = rangeMin;
             area.RangeMax = rangeMax;
             List<Vector3Int> areaPosList;

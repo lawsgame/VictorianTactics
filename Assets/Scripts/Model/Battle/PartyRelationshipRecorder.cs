@@ -3,29 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Opponents
+public class PartyRelationshipRecorder : MonoBehaviour
 {
-    public int party1;
-    public int party2;
-}
+    
+    [SerializeField] private int parties;
+    [SerializeField] private List<Opponents> opponents;
 
-public class PartyRelationshipRecorder
-{
     private bool[,] _opponentMatrix;
 
-
-    private PartyRelationshipRecorder() {
-        _opponentMatrix = null;
-    }
-
-    public static PartyRelationshipRecorder create(int numberOfParties, List<Opponents> opponents)
-    {
-        PartyRelationshipRecorder model = new PartyRelationshipRecorder();
-        model.ResetPartyMatrix(numberOfParties);
+    void Awake() { 
+        ResetPartyMatrix(parties);
         foreach (Opponents opp in opponents)
-            model.SetRelationShip(opp.party1, opp.party2, true);
-        return model;
+            SetRelationShip(opp.party1, opp.party2, true);
     }
 
     public void ResetPartyMatrix(int numberOfParties) {
@@ -65,7 +54,7 @@ public class PartyRelationshipRecorder
 
     public bool IsPartyNumberExist(int partyNumber) => _opponentMatrix != null && partyNumber < _opponentMatrix.Length && partyNumber >= 0;
 
-    internal bool SameSide(int party1, int party2)
+    public bool SameSide(int party1, int party2)
     {
         if (IsPartyNumberExist(party1) && IsPartyNumberExist(party2))
         {
@@ -79,4 +68,10 @@ public class PartyRelationshipRecorder
     }
 }
 
+[System.Serializable]
+public class Opponents
+{
+    public int party1;
+    public int party2;
+}
 

@@ -1,38 +1,36 @@
-﻿using System.Collections.Generic;
+﻿
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Battle;
+using static BattlefieldTileFetcher;
 
-[CustomEditor(typeof(Battle))]
-public class BattleEditor : Editor
+[CustomEditor(typeof(Battlefield))]
+public class BattlefieldEditor : Editor
 {
     private static readonly string label_MapCoords = "Map Coords";
-
     private static readonly string button_MapCoords_show = "Show";
     private static readonly string button_MapCoords_hide = "Hide";
-
-
     private static readonly string GPTH = "GridPosTextHolder";
+
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        Battle battlefield = target as Battle;
+        Battlefield battlefield = target as Battlefield;
 
         ShowMapPositionButtons(battlefield);
     }
 
-
-    private void ShowMapPositionButtons(Battle battlefield)
+    private void ShowMapPositionButtons(Battlefield battlefield)
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label(label_MapCoords);
 
         if (GUILayout.Button(button_MapCoords_show))
         {
-
+            Tilemap map = battlefield.GetComponent<Tilemap>();
+            BattlefieldTileFetcher fetcher = BattlefieldTileFetcher.Create(map);
             GameObject textHolder = GameObject.Find(GPTH);
             if (textHolder == null)
             {
@@ -43,9 +41,9 @@ public class BattleEditor : Editor
 
                 Vector3 tileWorldPosition;
                 GameObject tilePosIndicator;
-                foreach (WorldTileWrapper wrapper in battlefield.GetMapAsTileList())
+                foreach (WorldTileWrapper wrapper in fetcher.GetMapAsTileList())
                 {
-                    tileWorldPosition = battlefield.Battlefield.CellToWorld(wrapper.position);
+                    tileWorldPosition = map.CellToWorld(wrapper.position);
                     tilePosIndicator = Instantiate(battlefield.tilePosIndicator, tileWorldPosition, Quaternion.identity);
                     tilePosIndicator.transform.SetParent(textHolder.gameObject.transform);
                     tilePosIndicator.transform.position += new Vector3(0f, 0.25f, 0f); 
