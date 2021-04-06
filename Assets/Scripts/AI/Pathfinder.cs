@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static TMath;
 
-namespace Tactics.Pathfinder
+namespace Pathfinder
 {
 
     public class Node: IComparable

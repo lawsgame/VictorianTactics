@@ -1,7 +1,5 @@
-﻿using static WeaponTemplate;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
-using static UnitTemplate;
 using UnityEngine;
 using static Data;
 
@@ -117,10 +115,8 @@ public class UnitModel
         return statGained;
     }
 
-    public override string ToString()
-    {
-        return string.Format("Unit({0} lvl {1})", _template.Name(),_level); 
-    }
+    public override string ToString() =>  string.Format("Unit({0} lvl {1})", _template.Name(),_level); 
+    
 
     public bool SameSide(UnitModel model) => model._party == this._party;
     

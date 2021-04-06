@@ -6,6 +6,7 @@ public class FreePlayBIS : BattleInterractionState
 {
     private Unit _selectedUnit;
     private int moveAreaId;
+    private int attackAreaId;
    
 
     public FreePlayBIS(BattleController controller) : base(controller)
@@ -87,8 +88,13 @@ public class FreePlayBIS : BattleInterractionState
 
                 // show were the unit can move
                 Controller.AreaHandler.Remove(moveAreaId);
-                moveAreaId = Controller.AreaHandler.Create(battle, new TraversableArea(battle, _selectedUnit), AreaType.MOVE);
+                IAreaModel moveArea = new TraversableArea(battle, _selectedUnit);
+                moveAreaId = Controller.AreaHandler.Create(battle, moveArea, AreaType.MOVE);
                 Debug.Log("Area Created with ID: " + moveAreaId);
+
+                Controller.AreaHandler.Remove(attackAreaId);
+                List<Vector3Int> attackTargetCells = ActionAreaFinder.Algorithm.FindAttackArea(moveArea.GetCells(), battle, _selectedUnit);
+                attackAreaId = Controller.AreaHandler.Create(battle, new GenericArea(battle, attackTargetCells), AreaType.ATTACK);
             }
         }
     }
@@ -97,14 +103,13 @@ public class FreePlayBIS : BattleInterractionState
     {
         Debug.Log(string.Format("Long Touch on {0} / {1} / {2} / {3}", cellPos, worldPos, mousePosition, worldTile));
         
-
         if (worldTile != null && _selectedUnit != null)
         {
             Debug.Log("UNIT PATH");
 
             // compute path
             Battle battle = Controller.Battle;
-            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, _selectedUnit, cellPos);
+            List<Vector3Int> path = Pathfinder.Algorithm.GetShortestPath(battle, _selectedUnit, cellPos);
             Debug.Log(string.Join(" <- ", path));
 
             // show path
@@ -112,14 +117,15 @@ public class FreePlayBIS : BattleInterractionState
             moveAreaId = Controller.AreaHandler.Create(Controller.Battle, new GenericArea(Controller.Battle, path), AreaType.MOVE);
             Debug.Log("Area Created with ID: " + moveAreaId);
             
-        }else if (worldTile != null)
+        }
+        else if (worldTile != null)
         {
             // compute path
             Battle battle = Controller.Battle;
             int moveRange = 20;
             int partyNumber = 0;
             Vector3Int startingCell = new Vector3Int(0, 2, 0);
-            List<Vector3Int> path = Tactics.Pathfinder.Algorithm.GetShortestPath(battle, startingCell, cellPos, moveRange, partyNumber);
+            List<Vector3Int> path = Pathfinder.Algorithm.GetShortestPath(battle, startingCell, cellPos, moveRange, partyNumber);
             Debug.Log(string.Join(" <- ", path));
 
             // show path

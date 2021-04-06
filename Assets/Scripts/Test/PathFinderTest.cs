@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Tactics.Pathfinder;
+using Pathfinder;
 
 public class PathFinderTest : MonoBehaviour
 {

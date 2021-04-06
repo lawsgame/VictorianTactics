@@ -15,7 +15,7 @@ public class TraversableArea : IAreaModel
         this._walker = walker;
     }
 
-    public List<Vector3Int> GetCells() => TraversableAreaFinder.Algorithm.GetTravesableArea(_battle, _walker);
+    public List<Vector3Int> GetCells() => ActionAreaFinder.Algorithm.FindMoveArea(_battle, _walker);
 
     public List<WorldTile> GetTiles()
     {

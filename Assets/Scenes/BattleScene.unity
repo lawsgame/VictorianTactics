@@ -237,14 +237,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battlefield: {fileID: 982281584}
-  startingLevel: 19
+  startingLevel: 3
   party: 0
   randomLevelUp: 1
   initialOrientation: 2
   type: {fileID: 11400000, guid: 204364e004c77fd49b9c1af7c8956ad1, type: 2}
   weaponTypes:
-  - {fileID: 11400000, guid: 8c15a86ac85a21642a6d514792a191df, type: 2}
   - {fileID: 11400000, guid: adb22e5c88f673a448a0750279a62023, type: 2}
+  - {fileID: 11400000, guid: 8c15a86ac85a21642a6d514792a191df, type: 2}
 --- !u!114 &4345313
 MonoBehaviour:
   m_ObjectHideFlags: 0

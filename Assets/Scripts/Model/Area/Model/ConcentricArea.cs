@@ -7,18 +7,28 @@ using static TMath;
 
 public class ConcentricArea : IAreaModel
 {
-    private readonly Tilemap _ground;
-    private readonly int _rangeMin;
-    private readonly int _rangeMax;
-    private readonly bool _full;
-    private readonly Vector3Int _center;
+    public Tilemap Map { get; set; }
+    public int RangeMin { get; set; }
+    public int RangeMax { get; set; }
+    public Vector3Int Center { get; set; }
 
-    public ConcentricArea(Tilemap ground, Vector3Int center, int rangeMin, int rangeMax, bool full)
+    private bool _full;
+
+    public ConcentricArea(Tilemap map)
     {
-        this._ground = ground;
-        this._center = center;
-        this._rangeMax = rangeMax;
-        this._rangeMin = rangeMin;
+        this.Map = map;
+        this.RangeMin = 0;
+        this.RangeMax = 0;
+        this.Center = Vector3Int.zero;
+        this._full = false;
+    }
+
+    public ConcentricArea(Tilemap map, Vector3Int center, int rangeMin, int rangeMax, bool full)
+    {
+        this.Map = map;
+        this.Center = center;
+        this.RangeMax = rangeMax;
+        this.RangeMin = rangeMin;
         this._full = full;
     }
 
@@ -26,11 +36,11 @@ public class ConcentricArea : IAreaModel
     {
         List<Vector3Int> area = new List<Vector3Int>();
         Vector3Int gPos;
-        for (int xx = _center.x - _rangeMax; xx <= _center.x + _rangeMax; xx++ ){
-            for (int yy = _center.y - _rangeMax; yy <= _center.y + _rangeMax; yy++)
+        for (int xx = Center.x - RangeMax; xx <= Center.x + RangeMax; xx++ ){
+            for (int yy = Center.y - RangeMax; yy <= Center.y + RangeMax; yy++)
             {
                 gPos = new Vector3Int(xx, yy, 0);
-                if (IsInside(gPos) && _ground.HasTile(gPos)) 
+                if (IsInside(gPos) && Map.HasTile(gPos)) 
                     area.Add(gPos);
             }
         }
@@ -41,13 +51,13 @@ public class ConcentricArea : IAreaModel
     {
         List<WorldTile> area = new List<WorldTile>();
         Vector3Int gPos;
-        for (int xx = _center.x - _rangeMax; xx <= _center.x + _rangeMax; xx++)
+        for (int xx = Center.x - RangeMax; xx <= Center.x + RangeMax; xx++)
         {
-            for (int yy = _center.y - _rangeMax; yy <= _center.y + _rangeMax; yy++)
+            for (int yy = Center.y - RangeMax; yy <= Center.y + RangeMax; yy++)
             {
                 gPos = new Vector3Int(xx, yy, 0);
-                if (IsInside(gPos) && _ground.HasTile(gPos))
-                    area.Add(_ground.GetTile<WorldTile>(gPos));
+                if (IsInside(gPos) && Map.HasTile(gPos))
+                    area.Add(Map.GetTile<WorldTile>(gPos));
             }
         }
         return area;
@@ -57,12 +67,12 @@ public class ConcentricArea : IAreaModel
 
     private bool IsInside(int targetX, int targetY)
     {
-        int distX = Math.Abs(targetX - _center.x);
-        int distY = Math.Abs(targetY - _center.y);
+        int distX = Math.Abs(targetX - Center.x);
+        int distY = Math.Abs(targetY - Center.y);
         if (_full)
-            return _rangeMin <= Math.Max(distX, distY) && Math.Max(distX, distY) <= _rangeMax;
+            return RangeMin <= Math.Max(distX, distY) && Math.Max(distX, distY) <= RangeMax;
         else
-            return _rangeMin <= distX + distY && distX + distY <= _rangeMax;
+            return RangeMin <= distX + distY && distX + distY <= RangeMax;
     }
 
 

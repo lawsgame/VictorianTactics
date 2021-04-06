@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace TraversableAreaFinder
+namespace ActionAreaFinder
 {
     public class Node : IComparable
     {
@@ -54,10 +54,10 @@ namespace TraversableAreaFinder
     public static class Algorithm
     {
 
-        public static List<Vector3Int> GetTravesableArea(Battle battlefield, Unit unit) => GetTravesableArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
+        public static List<Vector3Int> FindMoveArea(Battle battlefield, Unit unit) => FindMoveArea(battlefield, unit.GetMapPos(), unit.Model.Mobility(), unit.Model.Party());
         
 
-        public static List<Vector3Int> GetTravesableArea(Battle battlefield, Vector3Int initPos, int range, int partyNumber)
+        public static List<Vector3Int> FindMoveArea(Battle battlefield, Vector3Int initPos, int range, int partyNumber)
         {
             
             if (!battlefield.Battlefield.HasTile(initPos))
@@ -141,6 +141,39 @@ namespace TraversableAreaFinder
             
         }
 
+        public static List<Vector3Int> FindAttackArea(List<Vector3Int> standingPointList, Battle battle, Unit actor)
+        {
+            int rangeMin = actor.Model.CurrentWeapon().Template().RangeMin();
+            int rangeMax = actor.Model.CurrentWeapon().Template().RangeMax();
+            Vector3Int actorPos = actor.GetMapPos();
+            return FindAttackArea(standingPointList, battle, rangeMin, rangeMax, actorPos);
+        }
+
+        public static List<Vector3Int> FindAttackArea(List<Vector3Int> standingPointList, Battle battle, int rangeMin, int rangeMax, Vector3Int actorPos)
+        {
+            standingPointList.Add(actorPos);
+
+            ConcentricArea area = new ConcentricArea(battle.Battlefield);
+            area.RangeMin = rangeMin;
+            area.RangeMax = rangeMax;
+            List<Vector3Int> areaPosList;
+            List<Vector3Int> attackArea = new List<Vector3Int>();
+            foreach(Vector3Int standingPoint in standingPointList)
+            {
+                area.Center = standingPoint;
+                areaPosList = area.GetCells();
+                foreach(Vector3Int target in areaPosList)
+                {
+                    if (!standingPointList.Contains(target) && !attackArea.Contains(target))
+                        attackArea.Add(target);
+                }
+            }
+
+            attackArea.Remove(actorPos);
+            standingPointList.Remove(actorPos);
+
+            return attackArea;
+        }
     }
 
 }

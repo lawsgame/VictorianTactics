@@ -26,7 +26,7 @@ MonoBehaviour:
   _baseGrowthAgility: 0.2
   _baseGrowthEndurance: 0.2
   _baseGrowthBravery: 0.2
-  _mobility: 0300000004000000
+  _mobility: 0200000003000000
   _armorBlunt: 0300000005000000
   _armorPiercing: 0100000002000000
   _armorSlash: 0100000003000000
